@@ -12,15 +12,15 @@
       <children>
         <VBox prefHeight="100.0" prefWidth="186.0">
           <children>
-            <Label text="Information" />
-            <ListView prefHeight="84.0" prefWidth="200.0" />
+            <Label id="compile_information" text="Information" />
+            <ListView fx:id="compile_information" prefHeight="84.0" prefWidth="200.0" />
           </children>
         </VBox>
         <Separator orientation="VERTICAL" prefHeight="200.0" />
         <VBox prefHeight="100.0" prefWidth="414.0">
           <children>
             <Label text="Ruby Source:" />
-            <TextArea editable="false" prefHeight="84.0" prefWidth="329.0" style="" text="def foo&#10;  puts &quot;bar&quot;&#10;end" wrapText="true" />
+            <TextArea fx:id="ruby_source" editable="false" prefHeight="84.0" prefWidth="329.0" style="" text="def foo&#10;  puts &quot;bar&quot;&#10;end" wrapText="true" />
           </children>
         </VBox>
       </children>
@@ -29,14 +29,14 @@
   <center>
     <HBox prefHeight="100.0" prefWidth="200.0">
       <children>
-        <TreeView prefHeight="200.0" prefWidth="200.0" />
-        <TabPane prefHeight="276.0" prefWidth="400.0" tabClosingPolicy="UNAVAILABLE">
+        <TreeView fx:id="ast_view" prefHeight="200.0" prefWidth="200.0" />
+        <TabPane fx:id="ir_tab_pane" prefHeight="276.0" prefWidth="400.0" tabClosingPolicy="UNAVAILABLE">
           <tabs>
             <Tab text="IR code">
               <content>
                 <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                   <children>
-                    <TextArea editable="false" prefHeight="240.0" prefWidth="400.0" text="Script: file: -ScriptBody -[-:0]&#10;  0  %self = recv_self&#10;  1  %current_scope = scope&lt;-&gt;&#10;  2  %current_module = module&lt;-&gt;&#10;  3  line_num(0)&#10;  4  def_inst_meth(&quot;--unused--&quot;, foo, -)&#10;  5  return(nil)&#10;    Method foo[-:0]&#10;      0  %self = recv_self&#10;      1  %current_scope = scope&lt;-&gt;&#10;      2  %current_module = module&lt;-&gt;&#10;      3  check_arity(0, 0, -1)&#10;      4  %block(0:0) = recv_closure&#10;      5  thread_poll&#10;      6  line_num(0)&#10;      7  %v_2 = &quot;bar&quot;&#10;      8  %v_3 = call(FUNCTIONAL, 'puts', %self, [%v_2])&#10;      9  return(%v_3)&#10;" wrapText="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                    <TextArea fx:id="ir_text_area" editable="false" prefHeight="240.0" prefWidth="400.0" text="Script: file: -ScriptBody -[-:0]&#10;  0  %self = recv_self&#10;  1  %current_scope = scope&lt;-&gt;&#10;  2  %current_module = module&lt;-&gt;&#10;  3  line_num(0)&#10;  4  def_inst_meth(&quot;--unused--&quot;, foo, -)&#10;  5  return(nil)&#10;    Method foo[-:0]&#10;      0  %self = recv_self&#10;      1  %current_scope = scope&lt;-&gt;&#10;      2  %current_module = module&lt;-&gt;&#10;      3  check_arity(0, 0, -1)&#10;      4  %block(0:0) = recv_closure&#10;      5  thread_poll&#10;      6  line_num(0)&#10;      7  %v_2 = &quot;bar&quot;&#10;      8  %v_3 = call(FUNCTIONAL, 'puts', %self, [%v_2])&#10;      9  return(%v_3)&#10;" wrapText="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                   </children>
                 </AnchorPane>
               </content>
