@@ -12,8 +12,19 @@
       <bottom>
         <HBox prefHeight="100.0" prefWidth="200.0">
           <children>
-            <ListView prefHeight="200.0" prefWidth="200.0" />
-            <TextArea prefHeight="100.0" prefWidth="400.0" wrapText="true" />
+            <VBox prefHeight="100.0" prefWidth="186.0">
+              <children>
+                <Label text="Information" />
+                <ListView prefHeight="84.0" prefWidth="200.0" />
+              </children>
+            </VBox>
+            <Separator orientation="VERTICAL" prefHeight="200.0" />
+            <VBox prefHeight="100.0" prefWidth="414.0">
+              <children>
+                <Label text="Ruby Source:" />
+                <TextArea editable="false" prefHeight="84.0" prefWidth="329.0" text="def foo&#10;  puts &quot;bar&quot;&#10;end" wrapText="true" />
+              </children>
+            </VBox>
           </children>
         </HBox>
       </bottom>
@@ -23,12 +34,12 @@
             <TreeView prefHeight="200.0" prefWidth="200.0" />
             <TabPane prefHeight="276.0" prefWidth="400.0" tabClosingPolicy="UNAVAILABLE">
               <tabs>
-                <Tab text="Untitled Tab 1">
+                <Tab text="IR code">
                   <content>
                     <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
                   </content>
                 </Tab>
-                <Tab text="Untitled Tab 2">
+                <Tab text="CFG">
                   <content>
                     <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
                   </content>
