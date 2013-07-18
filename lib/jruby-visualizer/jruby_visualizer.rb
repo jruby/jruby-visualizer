@@ -1,5 +1,5 @@
 require 'jruby'
-require 'visualizer_compiler_pass_listener'
+require_relative 'visualizer_compiler_pass_listener'
 
 module JRubyVisualizer
   def self.inject_pass_listener
@@ -41,4 +41,10 @@ module JRubyVisualizer
     end
     builder = builder.new(ir_manager)
   end
+end
+
+if __FILE__ == $0
+  vis = JRubyVisualizer
+  vis.inject_pass_listener unless vis.has_pass_listener
+  vis.visualize("def foo; 42; end; foo")
 end
