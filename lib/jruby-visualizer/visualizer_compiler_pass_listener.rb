@@ -1,7 +1,7 @@
 require 'java'
 
 class VisualizerCompilerPassListener
-  java_implements org.jruby.org.jruby.ir.passes.CompilerPassListener
+  java_implements org.jruby.ir.passes.CompilerPassListener
   include_package "org.jruby.ir.passes"
   import org.jruby.ir.IRScope
   
