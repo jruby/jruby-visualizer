@@ -1,3 +1,4 @@
+require 'java'
 require 'jruby'
 require_relative 'visualizer_compiler_pass_listener'
 
