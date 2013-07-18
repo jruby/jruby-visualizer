@@ -11,4 +11,8 @@ module JRubyVisualizer
     # activate visualization listener
     JRuby::IR.visualize = true
   end
+  
+  def self.has_pass_listener
+    JRuby::IR.visualize
+  end
 end
