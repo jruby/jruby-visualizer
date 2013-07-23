@@ -14,3 +14,8 @@ task :default => [:spec]
 
 desc "Run specs"
 RSpec::Core::RakeTask.new
+
+desc "Clean all build artifacts"
+task :clean do
+  rm_rf "pkg" if File.exists? "pkg"
+end
