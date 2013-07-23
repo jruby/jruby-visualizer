@@ -17,6 +17,13 @@ module JRubyVisualizer
     JRuby::IR.visualize
   end
   
+  def self.run_ir_passes(scope)
+    ir_manager = JRuby::runtime.ir_manager
+    ir_manager.get_compiler_passes(scope).each do |pass|
+      pass.run(scope)
+    end
+  end
+  
   def self.visualize(ruby_code)
     return unless has_pass_listener
     # TODO start GUI
@@ -26,12 +33,8 @@ module JRubyVisualizer
     
     builder = set_up_ir_builder
     scope = builder.build_root(root_node)
-    
-    ir_manager = JRuby::runtime.ir_manager
-    ir_manager.get_compiler_passes(scope).each do |pass|
-      pass.run(scope)
-    end
-    
+ 
+    run_ir_passes(scope)
     # TODO visualize AST and scope
   end
   
