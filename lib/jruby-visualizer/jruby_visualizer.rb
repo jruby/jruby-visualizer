@@ -27,6 +27,11 @@ module JRubyVisualizer
     builder = set_up_ir_builder
     scope = builder.build_root(root_node)
     
+    ir_manager = JRuby::runtime.ir_manager
+    ir_manager.get_compiler_passes(scope).each do |pass|
+      pass.run(scope)
+    end
+    
     # TODO visualize AST and scope
   end
   
