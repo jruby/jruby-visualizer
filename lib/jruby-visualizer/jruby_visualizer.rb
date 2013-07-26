@@ -6,11 +6,14 @@ require_relative 'visualizer_main_app'
 module JRubyVisualizer
   @@main_app = nil
   
-  def launched?
+  def self.launched?
     !!@@main_app
   end
   
-  def launch
+  def self.launch
+    if launched?
+      return
+    end
     VisualizerMainApp.launch
     @@main_app = VisualizerMainApp
   end
