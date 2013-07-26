@@ -13,7 +13,7 @@ module JRubyVisualizer
     JRuby::IR.visualize = true
   end
   
-  def self.has_pass_listener
+  def self.pass_listener?
     JRuby::IR.visualize
   end
   
@@ -25,7 +25,7 @@ module JRubyVisualizer
   end
   
   def self.visualize(ruby_code)
-    return unless has_pass_listener
+    return unless pass_listener?
     # TODO start GUI
     
     # parse ruby_code into AST
@@ -54,6 +54,6 @@ end
 
 if __FILE__ == $0
   vis = JRubyVisualizer
-  vis.inject_pass_listener unless vis.has_pass_listener
+  vis.inject_pass_listener unless vis.pass_listener?
   vis.visualize("def foo; 42; end; foo")
 end
