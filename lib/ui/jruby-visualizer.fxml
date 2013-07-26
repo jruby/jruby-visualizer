@@ -21,13 +21,13 @@
         <VBox prefHeight="200.0" prefWidth="100.0">
           <children>
             <Label text="Abstract Syntax Tree:" />
-            <TreeView fx:id="ast_view" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="NEVER" />
+            <TreeView fx:id="ast_view" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS" />
           </children>
         </VBox>
         <VBox prefHeight="100.0" prefWidth="414.0">
           <children>
             <Label text="Ruby Source:" />
-            <TextArea fx:id="ruby_source" editable="false" prefHeight="258.0000999999975" prefWidth="330.0" style="" text="def foo&#10;  puts &quot;bar&quot;&#10;end" wrapText="true" />
+            <TextArea fx:id="ruby_source" editable="false" prefHeight="258.0000999999975" prefWidth="330.0" style="" text="def foo&#10;  puts &quot;bar&quot;&#10;end" wrapText="true" VBox.vgrow="ALWAYS" />
           </children>
         </VBox>
       </items>
