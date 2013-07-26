@@ -8,10 +8,10 @@
 
 <BorderPane prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2">
   <center>
-    <VBox prefHeight="200.0" prefWidth="100.0">
+    <VBox prefHeight="-1.0" prefWidth="-1.0">
       <children>
         <Label text="IR Code:" />
-        <TextArea prefWidth="200.0" wrapText="true" />
+        <TextArea editable="false" minHeight="-1.0" prefWidth="-1.0" text="Script: file: -ScriptBody -[-:0]&#10;  0  %self = recv_self&#10;  1  %current_scope = scope&lt;-&gt;&#10;  2  %current_module = module&lt;-&gt;&#10;  3  line_num(0)&#10;  4  def_inst_meth(&quot;--unused--&quot;, foo, -)&#10;  5  return(nil)&#10;    Method foo[-:0]&#10;      0  %self = recv_self&#10;      1  %current_scope = scope&lt;-&gt;&#10;      2  %current_module = module&lt;-&gt;&#10;      3  check_arity(0, 0, -1)&#10;      4  %block(0:0) = recv_closure&#10;      5  thread_poll&#10;      6  line_num(0)&#10;      7  %v_2 = &quot;bar&quot;&#10;      8  %v_3 = call(FUNCTIONAL, 'puts', %self, [%v_2])&#10;      9  return(%v_3)&#10;" wrapText="true" VBox.vgrow="ALWAYS" />
       </children>
     </VBox>
   </center>
