@@ -21,7 +21,7 @@
         <VBox prefHeight="200.0" prefWidth="100.0">
           <children>
             <Label text="Abstract Syntax Tree:" />
-            <TreeView prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="NEVER" />
+            <TreeView fx:id="ast_view" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="NEVER" />
           </children>
         </VBox>
         <VBox prefHeight="100.0" prefWidth="414.0">
