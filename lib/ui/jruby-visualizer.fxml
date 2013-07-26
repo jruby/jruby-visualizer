@@ -8,17 +8,12 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2">
   <bottom>
-    <HBox prefHeight="100.0" prefWidth="200.0">
+    <VBox prefHeight="-1.0" prefWidth="-1.0">
       <children>
-        <VBox prefHeight="100.0" prefWidth="186.0">
-          <children>
-            <Label id="compile_information" text="Information" />
-            <ListView fx:id="compile_information" prefHeight="84.0" prefWidth="200.0" />
-          </children>
-        </VBox>
-        <Separator orientation="VERTICAL" prefHeight="200.0" />
+        <Label id="compile_information" text="Information" />
+        <ListView fx:id="compile_information" prefHeight="84.0" prefWidth="-1.0" />
       </children>
-    </HBox>
+    </VBox>
   </bottom>
   <center>
     <SplitPane dividerPositions="0.4431438127090301" focusTraversable="true" prefHeight="160.0" prefWidth="200.0">
@@ -26,13 +21,13 @@
         <VBox prefHeight="200.0" prefWidth="100.0">
           <children>
             <Label text="Abstract Syntax Tree:" />
-            <TreeView prefHeight="-1.0" prefWidth="-1.0" />
+            <TreeView prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="NEVER" />
           </children>
         </VBox>
         <VBox prefHeight="100.0" prefWidth="414.0">
           <children>
             <Label text="Ruby Source:" />
-            <TextArea fx:id="ruby_source" editable="false" prefHeight="84.0" prefWidth="329.0" style="" text="def foo&#10;  puts &quot;bar&quot;&#10;end" wrapText="true" />
+            <TextArea fx:id="ruby_source" editable="false" prefHeight="258.0000999999975" prefWidth="330.0" style="" text="def foo&#10;  puts &quot;bar&quot;&#10;end" wrapText="true" />
           </children>
         </VBox>
       </items>
