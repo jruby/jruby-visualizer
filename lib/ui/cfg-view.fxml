@@ -9,42 +9,38 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.paint.*?>
 
-<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2">
-  <children>
-    <BorderPane prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-      <center>
-        <Pane prefHeight="200.0" prefWidth="200.0">
-          <children>
-            <ImageView fitHeight="360.0" fitWidth="600.0" layoutX="0.0" layoutY="0.0" pickOnBounds="true" preserveRatio="true" />
-          </children>
-        </Pane>
-      </center>
-      <padding>
-        <Insets />
-      </padding>
-      <top>
-        <HBox prefHeight="25.0" prefWidth="600.0" spacing="5.0" BorderPane.alignment="CENTER">
-          <children>
-            <Label text="Scope">
-              <HBox.margin>
-                <Insets bottom="5.0" left="5.0" top="8.0" />
-              </HBox.margin>
-            </Label>
-            <ComboBox prefWidth="201.0">
-              <items>
-                <FXCollections fx:factory="observableArrayList">
-                  <String fx:value="Item 1" />
-                  <String fx:value="Item 2" />
-                  <String fx:value="Item 3" />
-                </FXCollections>
-              </items>
-              <HBox.margin>
-                <Insets bottom="5.0" right="5.0" top="5.0" />
-              </HBox.margin>
-            </ComboBox>
-          </children>
-        </HBox>
-      </top>
-    </BorderPane>
-  </children>
-</AnchorPane>
+<BorderPane prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2">
+  <center>
+    <Pane prefHeight="200.0" prefWidth="200.0">
+      <children>
+        <ImageView fitHeight="360.0" fitWidth="600.0" layoutX="0.0" layoutY="0.0" pickOnBounds="true" preserveRatio="true" />
+      </children>
+    </Pane>
+  </center>
+  <padding>
+    <Insets />
+  </padding>
+  <top>
+    <HBox prefHeight="25.0" prefWidth="600.0" spacing="5.0" BorderPane.alignment="CENTER">
+      <children>
+        <Label text="Scope">
+          <HBox.margin>
+            <Insets bottom="5.0" left="5.0" top="8.0" />
+          </HBox.margin>
+        </Label>
+        <ComboBox prefWidth="201.0">
+          <items>
+            <FXCollections fx:factory="observableArrayList">
+              <String fx:value="Item 1" />
+              <String fx:value="Item 2" />
+              <String fx:value="Item 3" />
+            </FXCollections>
+          </items>
+          <HBox.margin>
+            <Insets bottom="5.0" right="5.0" top="5.0" />
+          </HBox.margin>
+        </ComboBox>
+      </children>
+    </HBox>
+  </top>
+</BorderPane>
