@@ -1,8 +1,20 @@
 require 'java'
 require 'jruby'
 require_relative 'visualizer_compiler_pass_listener'
+require_relative 'visualizer_main_app'
 
 module JRubyVisualizer
+  @@main_app = nil
+  
+  def launched?
+    !!@@main_app
+  end
+  
+  def launch
+    VisualizerMainApp.launch
+    @@main_app = VisualizerMainApp
+  end
+  
   def self.inject_pass_listener
     # create and add listener
     vis_pass_listener = VisualizerCompilerPassListener.new
@@ -27,6 +39,7 @@ module JRubyVisualizer
   def self.visualize(ruby_code)
     return unless pass_listener?
     # TODO start GUI
+    launch
     
     # parse ruby_code into AST
     root_node = JRuby.parse(ruby_code)
