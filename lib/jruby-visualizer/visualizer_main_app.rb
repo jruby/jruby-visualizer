@@ -20,8 +20,8 @@ class JRubyVisualizerController
   property_accessor :ruby_code
   
   def initialize
-    @ruby_code = SimpleStringProperty.new
-    @ast_root_node = JRuby.parse(@ruby_code)
+    @ruby_code = SimpleStringProperty.new("")
+    @ast_root_node = JRuby.parse(@ruby_code.get)
     fill_ast_view
     # bind change of Ruby code to reparsing an AST
     ruby_code_property.add_change_listener do |new_code|
