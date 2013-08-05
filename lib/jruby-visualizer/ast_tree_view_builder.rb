@@ -7,24 +7,25 @@ class ASTTreeViewBuilder
     @tree_view = tree_view
   end
   
+  def build_tree_item(node)
+    TreeItem.new(node.to_s)
+  end
+  
   def build_view(node, parent_node=nil)
     puts node
+    if parent_node.nil?
+      # root node
+      parent_node = @tree_view.root = build_tree_item(node)
+    else
+      # non root node
+      node_tree_item = build_tree_item(node)
+      parent_node.children << node_tree_item
+    end
+    
     if node.child_nodes.size
-      # non leaf node
-      if parent_node
-        # non root node
-        node_tree_item = TreeItem.new(node.to_s)
-        parent_node.children << node_tree_item
-      else
-        # root node
-        parent_node = @tree_view.root = TreeItem.new(node.to_s)
-      end
       node.child_nodes.each do |child|
-        build_view(child, node_tree_item)
+        build_view(child, parent_node)
       end
-    else 
-      # leaf node
-      node_tree_item = TreeItem.new()
     end
   end
 end
