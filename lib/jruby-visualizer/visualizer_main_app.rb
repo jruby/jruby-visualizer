@@ -5,17 +5,6 @@ fxml_root File.join(File.dirname(__FILE__), "ui")
 
 class VisualizerMainApp < JRubyFX::Application
   
-  def initialize(root_node)
-    super()
-    @root_node = root_node 
-  end
-  
-  def fill_ast_view(stage)
-    tree_view = stage['#ast_view']
-    tree_builder = ASTTreeViewBuilder.new(tree_view)
-    tree_builder.build_view(@root_node)
-  end
-  
   def start(stage)
     with(stage, title: "JRuby Visualizer") do
       fxml JRubyVisualizerController
@@ -28,4 +17,18 @@ end
 class JRubyVisualizerController
   include JRubyFX::Controller
   fxml "jruby-visualizer.fxml"
+  
+  def fill_ast_view
+    tree_builder = ASTTreeViewBuilder.new(@ast_view)
+    tree_builder.build_view(@root_node)
+  end
+  
+  
+  def initialize(root_node)
+    @ast_root_node = root_node
+    puts @ast_root_node
+    puts @ast_view.class
+    # TODO fill ast_view
+  end
+  
 end

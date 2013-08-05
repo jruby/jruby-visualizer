@@ -10,11 +10,11 @@ module JRubyVisualizer
     !!@@main_app
   end
   
-  def self.launch(ast_node)
+  def self.launch
     if launched?
       return
     end
-    VisualizerMainApp.launch(ast_node)
+    VisualizerMainApp.launch
     @@main_app = VisualizerMainApp
   end
   
@@ -44,7 +44,7 @@ module JRubyVisualizer
     
     # parse ruby_code into AST
     root_node = JRuby.parse(ruby_code)
-    launch(root_node)
+    launch
     
     builder = set_up_ir_builder
     scope = builder.build_root(root_node)
