@@ -4,7 +4,6 @@ class ASTTreeViewBuilder
   attr_accessor :tree_view
   
   def initialize(tree_view)
-    super()
     @tree_view = tree_view
   end
   
@@ -12,12 +11,20 @@ class ASTTreeViewBuilder
     puts node
     if node.child_nodes.size
       # non leaf node
+      if parent_node
+        # non root node
+        node_tree_item = TreeItem.new(node.to_s)
+        parent_node.children << node_tree_item
+      else
+        # root node
+        parent_node = @tree_view.root = TreeItem.new(node.to_s)
+      end
       node.child_nodes.each do |child|
-        #default_visit(child)
-        build_view(child, node)
+        build_view(child, node_tree_item)
       end
     else 
-      # leaf node 
+      # leaf node
+      node_tree_item = TreeItem.new()
     end
   end
 end
