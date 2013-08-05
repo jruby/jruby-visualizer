@@ -1,8 +1,6 @@
 require 'java'
 
-#java_import org.jruby.ast.visitor.AbstractNodeVisitor
-
-class ASTTreeViewBuilder #< AbstractNodeVisitor
+class ASTTreeViewBuilder
   attr_accessor :tree_view
   
   def initialize(tree_view)
