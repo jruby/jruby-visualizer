@@ -21,7 +21,7 @@
             <VBox prefHeight="100.0" prefWidth="414.0">
               <children>
                 <Label text="Ruby Source:" />
-                <TextArea fx:id="ruby_source" editable="false" prefHeight="258.0000999999975" prefWidth="330.0" style="-fx-font-family: monospaced" text="def foo&#10;  puts &quot;bar&quot;&#10;end" wrapText="true" VBox.vgrow="ALWAYS" />
+                <TextArea id="ruby_source" fx:id="ruby_view" editable="false" prefHeight="258.0000999999975" prefWidth="330.0" style="-fx-font-family: monospaced" text="def foo&#10;  puts &quot;bar&quot;&#10;end" wrapText="true" VBox.vgrow="ALWAYS" />
               </children>
             </VBox>
           </items>
