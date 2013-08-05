@@ -1,6 +1,7 @@
 require 'java'
 
 class ASTTreeViewBuilder
+  include JRubyFX
   attr_accessor :tree_view
   
   def initialize(tree_view)
