@@ -10,11 +10,11 @@ module JRubyVisualizer
     !!@@main_app
   end
   
-  def self.launch
+  def self.launch(ast_node)
     if launched?
       return
     end
-    VisualizerMainApp.launch
+    VisualizerMainApp.launch(ast_node)
     @@main_app = VisualizerMainApp
   end
   
@@ -41,15 +41,15 @@ module JRubyVisualizer
   
   def self.visualize(ruby_code)
     return unless pass_listener?
-    # TODO start GUI
-    launch
     
     # parse ruby_code into AST
     root_node = JRuby.parse(ruby_code)
+    launch(root_node)
     
     builder = set_up_ir_builder
     scope = builder.build_root(root_node)
  
+    # TODO IR stepping with scheduler as javafx tasks
     run_ir_passes(scope)
     # TODO visualize AST and scope
   end
