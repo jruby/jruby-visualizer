@@ -43,6 +43,20 @@ class CompilerData
     ast_root_property.add_change_listener do |new_ast|
       @ir_scope = self.class.build_ir(new_ast)
     end
+    @scheduler = nil
+  end
+  
+  def step_ir_passes
+    if @scheduler.nil?
+      ir_manager = JRuby::runtime.ir_manager
+      @scheduler = ir_manager.schedule_passes.iterator
+    end
+    
+    # TODO rubify this :-)
+    if @scheduler.has_next
+      pass = @scheduler.next
+      pass.run(scope)
+    end
   end
 
 end
