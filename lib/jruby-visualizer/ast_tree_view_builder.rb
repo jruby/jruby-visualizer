@@ -21,6 +21,7 @@ class ASTTreeViewBuilder
       # non root node
       node_tree_item = build_tree_item(node)
       parent_node.children << node_tree_item
+      parent_node = node_tree_item
     end
     
     if node.child_nodes.size
