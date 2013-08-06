@@ -28,11 +28,8 @@ class JRubyVisualizerController
       @ast_root_node = JRuby.parse(new_code)
       fill_ast_view
     end
-    # bind ruby code to ruby view
-    ruby_code_property.bind(@ruby_view.text_property)
-    puts @ast_root_node
-    puts @ast_view.class
-    # TODO fill ast_view
+    # bind ruby view to value of ruby_code
+    @ruby_view.text_property.bind(ruby_code_property)
   end
   
   def fill_ast_view
