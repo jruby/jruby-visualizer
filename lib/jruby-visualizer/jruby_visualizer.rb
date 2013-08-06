@@ -32,13 +32,6 @@ module JRubyVisualizer
     JRuby::IR.visualize
   end
   
-  def self.run_ir_passes(scope)
-    ir_manager = JRuby::runtime.ir_manager
-    ir_manager.get_compiler_passes(scope).each do |pass|
-      pass.run(scope)
-    end
-  end
-  
   def self.visualize(ruby_code)
     return unless pass_listener?
     
@@ -52,19 +45,7 @@ module JRubyVisualizer
     #run_ir_passes(scope)
     # TODO visualize AST and scope
   end
-  
-  def self.set_up_ir_builder
-    ir_manager = JRuby::runtime.ir_manager
-    ir_manager.dry_run = true
-
-    builder = 
-      if JRuby::runtime.is1_9?
-      org.jruby.ir.IRBuilder19
-    else
-      org.jruby.ir.IRBuilder
-    end
-    builder = builder.new(ir_manager)
-  end
+ 
 end
 
 if __FILE__ == $0

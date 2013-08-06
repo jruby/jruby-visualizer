@@ -29,9 +29,6 @@ class JRubyVisualizerController
   
   def initialize(compiler_data)
     @compiler_data = compiler_data
-    #puts "This should be the ruby code: |#{ruby_code}|"
-    #@ruby_code = SimpleStringProperty.new(ruby_code)
-    #@ast_root_node = JRuby.parse(@ruby_code.get)
     fill_ast_view(@compiler_data.ast_root)
     # bind change of ast to redrawing AST
     @compiler_data.ast_root_property.add_change_listener do |new_ast|
