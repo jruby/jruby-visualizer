@@ -5,9 +5,15 @@ fxml_root File.join(File.dirname(__FILE__), "ui")
 
 class VisualizerMainApp < JRubyFX::Application
   
+  def init
+    params = getParameters
+    # TODO read_ruby code
+    @ruby_code 
+  end
+  
   def start(stage)
     with(stage, title: "JRuby Visualizer") do
-      fxml JRubyVisualizerController
+      fxml(JRubyVisualizerController, initialize: [@ruby_code])
       show
     end
   end
@@ -19,8 +25,8 @@ class JRubyVisualizerController
   
   property_accessor :ruby_code
   
-  def initialize
-    @ruby_code = SimpleStringProperty.new("")
+  def initialize(ruby_code="")
+    @ruby_code = SimpleStringProperty.new(ruby_code)
     @ast_root_node = JRuby.parse(@ruby_code.get)
     fill_ast_view
     # bind change of Ruby code to reparsing an AST
