@@ -5,8 +5,7 @@ class CompilerData
   
   @@ir_builder = nil
   
-  attr_accessor :ast_root, :ir_scope
-  property_accessor :ruby_code
+  property_accessor :ruby_code, :ast_root, :ir_scope
   
   def self.parse(code)
     JRuby.parse(code)
@@ -34,12 +33,15 @@ class CompilerData
   
   def initialize(ruby_code='')
     @ruby_code = SimpleStringProperty.new(ruby_code)
-    @ast_root = reparse(@ruby_code)
-    @ir_scope = build_ir(@ast_root)
-    # bind change of Ruby code to reparsing an AST and building IR
+    @ast_root = SimpleObjectProperty.new(self, "ast_root", reparse(ruby_code))
+    @ir_scope = SimpleObjectProperty.new(self, "ir_scope", build_ir(@ast_root.get))
+    # bind change of Ruby code to reparsing an AST and set the property
     ruby_code_property.add_change_listener do |new_code|
       @ast_root = reparse(new_code)
-      @ir_scope = build_ir(@ast_root)
+    end
+    # bind change of AST to rebuilding IR and set the property
+    ast_root_property.add_change_listener do |new_ast|
+      @ir_scope = build_ir(new_ast)
     end
   end
 
