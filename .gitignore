@@ -17,3 +17,6 @@ tmp
 _yardoc
 doc/
 /nbproject/private/
+
+# jrubyfx artifacts
+lib/jruby-visualizer/ui/.jrubyfx_cache
