@@ -15,3 +15,7 @@ class CFGVisualizerController
   include JRubyFX::Controller
   fxml "cfg-view.fxml"
 end
+
+if __FILE__ == $0
+  CFGVisualizer.launch
+end
