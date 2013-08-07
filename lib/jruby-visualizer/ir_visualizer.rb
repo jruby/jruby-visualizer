@@ -21,7 +21,6 @@ class IRVisualizerController
   attr_accessor :compiler_data
   
   def initialize(compiler_data)
-    puts "inside of ir_visualizer controller"
 #    @compiler_data = compiler_data
 #    @compiler_data.ir_scope_property.add_change_listener do |new_scope|
 #      pretty_ir_string = IRPrettyPrinter.print_ir(new_scope)

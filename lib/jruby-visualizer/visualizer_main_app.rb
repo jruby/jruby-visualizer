@@ -23,9 +23,7 @@ class SubAppTask < Java::javafx.concurrent.Task
   
   def call
     stage = Java::javafx.stage.Stage.new
-    puts stage
     @view.start(stage)
-    puts "done"
   end
 end
 
@@ -82,9 +80,7 @@ class JRubyVisualizerController
   end
   
   def launch_ir_view
-    # TODO launch ir view as a background task
-    # pass CompilerData
-    puts "launched ir_view"
+    # TODO pass CompilerData
     if @ir_view_task.nil?
       @ir_view_task = SubAppTask.new(:ir_view)
       Platform.run_later(@ir_view_task)
@@ -92,9 +88,7 @@ class JRubyVisualizerController
   end
   
   def launch_cfg_view
-    # TODO launch cfg_view as a background task
-    # pass CompilerData
-    puts "launched cfg_view"
+    # TODO pass CompilerData
     if @cfg_view_task.nil?
       @cfg_view_task = SubAppTask.new(:cfg_view)
       Platform.run_later(@cfg_view_task)
