@@ -1,8 +1,36 @@
 require 'jrubyfx'
 require_relative 'ast_tree_view_builder'
 require_relative 'compiler_data'
+require_relative 'ir_visualizer'
 
 fxml_root File.join(File.dirname(__FILE__), "ui")
+
+class SubAppTask < Java::javafx.concurrent.Task
+  
+  def initialize(view_name)
+    super()
+    # (select view)
+    case view_name
+    when :ir_view
+      @view = IRVisualizer
+    when :cfg_view
+      @view = CFGVisualizer
+    else
+      raise "unknown name for a view: #{view_name}"
+    end
+  end
+  
+  def call
+    puts "I am a SubAppTask"
+    puts @view
+    view = @view.new
+    puts view
+    stage = Java::javafx.stage.Stage.new
+    puts stage
+    view.start(stage)
+    puts "done"
+  end
+end
 
 class VisualizerMainApp < JRubyFX::Application
   
@@ -36,6 +64,10 @@ class JRubyVisualizerController
     end
     # bind ruby view to value of ruby_code
     @ruby_view.text_property.bind(@compiler_data.ruby_code_property)
+    
+    # background tasks for other views
+    @ir_view_task = nil
+    @cfg_view_task = nil
     puts @compiler_data.ir_scope.instrs.to_s
   end
   
@@ -56,6 +88,11 @@ class JRubyVisualizerController
     # TODO launch ir view as a background task
     # pass CompilerData
     puts "launched ir_view"
+    if @ir_view_task.nil?
+      @ir_view_task = SubAppTask.new(:ir_view)
+      thread = Java::java.lang.Thread.new(@ir_view_task)
+      Platform.run_later(thread)
+    end
   end
   
   def launch_cfg_view
