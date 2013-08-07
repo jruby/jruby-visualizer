@@ -90,8 +90,7 @@ class JRubyVisualizerController
     puts "launched ir_view"
     if @ir_view_task.nil?
       @ir_view_task = SubAppTask.new(:ir_view)
-      thread = Java::java.lang.Thread.new(@ir_view_task)
-      Platform.run_later(thread)
+      Platform.run_later(@ir_view_task)
     end
   end
   
