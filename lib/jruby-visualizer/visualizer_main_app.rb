@@ -52,4 +52,16 @@ class JRubyVisualizerController
     Platform.exit
   end
   
+  def launch_ir_view
+    # TODO launch ir view as a background task
+    # pass CompilerData
+    puts "launched ir_view"
+  end
+  
+  def launch_cfg_view
+    # TODO launch cfg_view as a background task
+    # pass CompilerData
+    puts "launched cfg_view"
+  end
+  
 end

@@ -40,12 +40,13 @@
       <menus>
         <Menu mnemonicParsing="false" text="File">
           <items>
-            <MenuItem mnemonicParsing="false" onAction="#close_app" text="Close" fx:id="close_entry" />
+            <MenuItem mnemonicParsing="false" onAction="#close_app" text="Close" />
           </items>
         </Menu>
-        <Menu mnemonicParsing="false" text="Edit">
+        <Menu mnemonicParsing="false" text="View">
           <items>
-            <MenuItem mnemonicParsing="false" text="Delete" />
+            <MenuItem mnemonicParsing="false" onAction="#launch_ir_view" text="IR View" />
+            <MenuItem mnemonicParsing="false" onAction="#launch_cfg_view" text="Control Flow Graph" />
           </items>
         </Menu>
         <Menu mnemonicParsing="false" text="Help">
