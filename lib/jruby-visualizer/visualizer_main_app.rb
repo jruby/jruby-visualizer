@@ -47,4 +47,9 @@ class JRubyVisualizerController
     tree_builder.build_view(root_node)
   end
   
+  def close_app
+    # TODO close other views
+    Platform.exit
+  end
+  
 end
