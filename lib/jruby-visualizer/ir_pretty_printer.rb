@@ -21,4 +21,9 @@ module IRPrettyPrinter
     end
   end
   
+  def self.pretty_string(scope)
+    instrs = pretty_ir(scope)
+    instrs.join("\n")
+  end
+  
 end
