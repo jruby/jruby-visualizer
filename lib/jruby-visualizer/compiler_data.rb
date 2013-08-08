@@ -12,6 +12,7 @@ class CompilerData
   end
   
   def self.create_ir_builder
+    JRuby::IR.compiler_debug = true
     ir_manager = JRuby::runtime.ir_manager
     ir_manager.dry_run = true
 
@@ -63,7 +64,8 @@ class CompilerData
       pass = @scheduler.next
       run_pass_on_all_scopes(pass, @ir_scope.get)
       puts "Executed #{pass.java_class}"
-      ir_scope_property.fire_value_changed_event
+      #ir_scope_property.fire_value_changed_event
+      @ir_scope.set(@ir_scope.get)
     end
   end
 
