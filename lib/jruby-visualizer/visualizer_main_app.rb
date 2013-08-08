@@ -3,6 +3,7 @@ require_relative 'ast_tree_view_builder'
 require_relative 'compiler_data'
 require_relative 'ir_visualizer'
 require_relative 'cfg_visualizer'
+require_relative 'jruby_visualizer'
 
 fxml_root File.join(File.dirname(__FILE__), "ui")
 
@@ -29,14 +30,8 @@ end
 
 class VisualizerMainApp < JRubyFX::Application
   
-  def init
-    params = parameters.raw
-    ruby_code = params[0]
-    @compiler_data = CompilerData.new(ruby_code)
-  end
-  
   def start(stage)
-    compiler_data = @compiler_data
+    compiler_data = JRubyVisualizer.compiler_data
     with(stage, title: "JRuby Visualizer") do
       fxml(JRubyVisualizerController, initialize: [compiler_data])
       show
@@ -95,4 +90,10 @@ class JRubyVisualizerController
     end
   end
   
+end
+
+if __FILE__ == $0
+  JRubyVisualizer.compiler_data = CompilerData.new(
+    "class Foo\n  def bar\n    42\n  end\nend\nFoo.new.bar\n")
+  VisualizerMainApp.launch
 end
