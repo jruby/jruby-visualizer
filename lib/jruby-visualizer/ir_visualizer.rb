@@ -38,6 +38,7 @@ class IRVisualizerController
 end
 
 if __FILE__ == $0
-  JRubyVisualizer.compiler_data = CompilerData.new("i = 3 + 1; puts i")
+  JRubyVisualizer.compiler_data = CompilerData.new(
+    "a = 1 + 4 + 7;\nc = nil;\nj = 1;\ni = 3 + j;\nputs i")
   IRVisualizer.launch
 end
