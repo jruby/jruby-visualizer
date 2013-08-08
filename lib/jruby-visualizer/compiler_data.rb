@@ -64,8 +64,7 @@ class CompilerData
       pass = @scheduler.next
       run_pass_on_all_scopes(pass, @ir_scope.get)
       puts "Executed #{pass.java_class}"
-      #ir_scope_property.fire_value_changed_event
-      @ir_scope.set(@ir_scope.get)
+      ir_scope_property.fire_value_changed_event
     end
   end
 
