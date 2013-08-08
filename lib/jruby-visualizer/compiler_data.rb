@@ -46,9 +46,9 @@ class CompilerData
     @scheduler = nil
   end
   
-  def run_pass_on_all_scopes(pass, scope=@ir_scope)
+  def run_pass_on_all_scopes(pass, scope)
     pass.run(scope)
-    @ir_scope.lexical_scopes.each do |lex_scope|
+    scope.lexical_scopes.each do |lex_scope|
       run_pass_on_all_scopes(pass, lex_scope)
     end
   end
@@ -61,7 +61,8 @@ class CompilerData
     
     if @scheduler.has_next
       pass = @scheduler.next
-      run_pass_on_all_scopes(pass)
+      run_pass_on_all_scopes(pass, @ir_scope.get)
+      puts "Executed #{pass.java_class}"
       ir_scope_property.fire_value_changed_event
     end
   end
