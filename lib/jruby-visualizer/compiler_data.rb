@@ -46,16 +46,23 @@ class CompilerData
     @scheduler = nil
   end
   
+  def run_pass_on_all_scopes(pass, scope=@ir_scope)
+    pass.run(scope)
+    @ir_scope.lexical_scopes.each do |lex_scope|
+      run_pass_on_all_scopes(pass, lex_scope)
+    end
+  end
+  
   def step_ir_passes
     if @scheduler.nil?
       ir_manager = JRuby::runtime.ir_manager
       @scheduler = ir_manager.schedule_passes.iterator
     end
     
-    # TODO rubify this :-)
     if @scheduler.has_next
       pass = @scheduler.next
-      pass.run(scope)
+      run_pass_on_all_scopes(pass)
+      ir_scope_property.fire_value_changed_event
     end
   end
 
