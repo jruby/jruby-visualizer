@@ -5,7 +5,7 @@ class CompilerData
   
   @@ir_builder = nil
   
-  property_accessor :ruby_code, :ast_root, :ir_scope
+  property_accessor :ruby_code, :ast_root, :ir_scope, :current_pass, :next_pass
   
   def self.parse(code)
     JRuby.parse(code)
@@ -32,6 +32,17 @@ class CompilerData
     @@ir_builder.build_root(root_node)
   end
   
+  def self.pass_to_s(pass)
+    pass.class.to_s.split("::").last
+  end
+  
+  def self.compiler_passes_names
+    scheduler = JRuby::runtime.ir_manager.schedule_passes
+    scheduler.map do |pass|
+      pass_to_s(pass)
+    end
+  end
+  
   def initialize(ruby_code='')
     @ruby_code = SimpleStringProperty.new(ruby_code)
     @ast_root = SimpleObjectProperty.new(self, "ast_root", self.class.parse(ruby_code))
@@ -44,14 +55,11 @@ class CompilerData
     ast_root_property.add_change_listener do |new_ast|
       @ir_scope = self.class.build_ir(new_ast)
     end
-    @scheduler = nil
-  end
-  
-  def self.compiler_passes_names
-    scheduler = JRuby::runtime.ir_manager.schedule_passes
-    scheduler.map do |pass|
-      pass.class.to_s.split("::").last
-    end
+    
+    # initialize scheduler
+    ir_manager = JRuby::runtime.ir_manager
+    @scheduler = ir_manager.schedule_passes.iterator
+    
   end
   
   def run_pass_on_all_scopes(pass, scope)
@@ -62,11 +70,6 @@ class CompilerData
   end
   
   def step_ir_passes
-    if @scheduler.nil?
-      ir_manager = JRuby::runtime.ir_manager
-      @scheduler = ir_manager.schedule_passes.iterator
-    end
-    
     if @scheduler.has_next
       pass = @scheduler.next
       run_pass_on_all_scopes(pass, @ir_scope.get)
