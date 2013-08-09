@@ -43,6 +43,17 @@ class CompilerData
     end
   end
   
+  def reset_scheduler
+    ir_manager = JRuby::runtime.ir_manager
+    @scheduler = ir_manager.schedule_passes.iterator
+    if @scheduler.has_next
+      @current_pass = nil
+      @next_pass = @scheduler.next
+    else
+      @current_pass = @next_pass = nil
+    end    
+  end
+  
   def initialize(ruby_code='')
     @ruby_code = SimpleStringProperty.new(ruby_code)
     @ast_root = SimpleObjectProperty.new(self, "ast_root", self.class.parse(ruby_code))
@@ -57,9 +68,7 @@ class CompilerData
     end
     
     # initialize scheduler
-    ir_manager = JRuby::runtime.ir_manager
-    @scheduler = ir_manager.schedule_passes.iterator
-    
+    reset_scheduler
   end
   
   def run_pass_on_all_scopes(pass, scope)
