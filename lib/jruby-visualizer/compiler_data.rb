@@ -5,7 +5,8 @@ class CompilerData
   
   @@ir_builder = nil
   
-  property_accessor :ruby_code, :ast_root, :ir_scope, :current_pass, :next_pass
+  property_accessor :ruby_code, :ast_root, :ir_scope
+  attr_accessor :current_pass, :next_pass
   
   def self.parse(code)
     JRuby.parse(code)
@@ -51,7 +52,9 @@ class CompilerData
       @next_pass = @scheduler.next
     else
       @current_pass = @next_pass = nil
-    end    
+    end
+    # trigger to re build the old ir scope
+    @ir_scope.set(self.class.build_ir(@ast_root.get))
   end
   
   def initialize(ruby_code='')

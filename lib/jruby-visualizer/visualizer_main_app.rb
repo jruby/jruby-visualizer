@@ -80,7 +80,10 @@ class JRubyVisualizerController
   end
   
   def step_ir_pass
-    @compiler_data.step_ir_passes
+    unless @compiler_data.next_pass
+      @compiler_data.reset_scheduler
+    end
+    @compiler_data.step_ir_passes  
   end
   
   def fill_ast_view(root_node)
