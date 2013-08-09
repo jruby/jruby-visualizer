@@ -43,7 +43,7 @@ class JRubyVisualizerController
   include JRubyFX::Controller
   fxml "jruby-visualizer.fxml"
   
-  attr_accessor :compiler_data
+  attr_accessor :compiler_data, :information
   
   def initialize(compiler_data)
     @compiler_data = compiler_data
@@ -58,7 +58,9 @@ class JRubyVisualizerController
     # background tasks for other views
     @ir_view_task = nil
     @cfg_view_task = nil
-    puts @compiler_data.ir_scope.instrs.to_s
+    
+    # information property back ended by the list view for compile information
+    @information = @compile_information.items
   end
   
   def fill_ast_view(root_node)
@@ -70,12 +72,10 @@ class JRubyVisualizerController
   end
   
   def close_app
-    # TODO close other views
     Platform.exit
   end
   
   def launch_ir_view
-    # TODO pass CompilerData
     if @ir_view_task.nil?
       @ir_view_task = SubAppTask.new(:ir_view)
       Platform.run_later(@ir_view_task)
@@ -83,7 +83,6 @@ class JRubyVisualizerController
   end
   
   def launch_cfg_view
-    # TODO pass CompilerData
     if @cfg_view_task.nil?
       @cfg_view_task = SubAppTask.new(:cfg_view)
       Platform.run_later(@cfg_view_task)
