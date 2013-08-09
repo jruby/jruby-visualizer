@@ -2,7 +2,16 @@ module IRPrettyPrinter
   
   def self.pretty_ir(scope, indent="")
     i = 0
-    pretty_str = scope.instrs.map do |instr|
+    instrs = if scope.cfg
+      # read instrs from control flow graph
+      scope.cfg.sorted_basic_blocks.inject([]) do |cfg_instrs, bb|
+        cfg_instrs += bb.instrs
+      end
+    else
+      # if no pass has been executed get them directly without cfg
+      scope.instrs
+    end
+    pretty_str = instrs.map do |instr|
       f_str = "%s%3i\s\s%s" % [indent, i, instr]
       i += 1
       f_str 
