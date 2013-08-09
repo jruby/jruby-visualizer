@@ -15,12 +15,4 @@
       </children>
     </VBox>
   </center>
-  <top>
-    <HBox alignment="CENTER_LEFT" prefHeight="25.0" prefWidth="200.0">
-      <children>
-        <Label alignment="CENTER" text="IR Pass:" />
-        <Button mnemonicParsing="false" onAction="#step_ir_pass" text="Step" />
-      </children>
-    </HBox>
-  </top>
 </BorderPane>
