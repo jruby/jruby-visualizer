@@ -47,6 +47,13 @@ class CompilerData
     @scheduler = nil
   end
   
+  def self.compiler_passes_names
+    scheduler = JRuby::runtime.ir_manager.schedule_passes
+    scheduler.map do |pass|
+      pass.class.to_s.split("::").last
+    end
+  end
+  
   def run_pass_on_all_scopes(pass, scope)
     pass.run(scope)
     scope.lexical_scopes.each do |lex_scope|
