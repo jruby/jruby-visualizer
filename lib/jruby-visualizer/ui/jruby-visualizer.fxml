@@ -2,13 +2,14 @@
 
 <?import java.lang.*?>
 <?import java.util.*?>
+<?import javafx.collections.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.paint.*?>
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2">
   <center>
-    <SplitPane dividerPositions="0.6631016042780749" focusTraversable="true" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0">
+    <SplitPane dividerPositions="0.6783625730994152" focusTraversable="true" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0">
       <items>
         <SplitPane dividerPositions="0.5" focusTraversable="true" prefHeight="160.0" prefWidth="200.0">
           <items>
@@ -36,25 +37,45 @@
     </SplitPane>
   </center>
   <top>
-    <MenuBar>
-      <menus>
-        <Menu mnemonicParsing="false" text="File">
+    <VBox prefHeight="-1.0" prefWidth="-1.0">
+      <children>
+        <MenuBar>
+          <menus>
+            <Menu mnemonicParsing="false" text="File">
+              <items>
+                <MenuItem mnemonicParsing="false" onAction="#close_app" text="Close" />
+              </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="View">
+              <items>
+                <MenuItem mnemonicParsing="false" onAction="#launch_ir_view" text="IR View" />
+                <MenuItem mnemonicParsing="false" onAction="#launch_cfg_view" text="Control Flow Graph" />
+              </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Help">
+              <items>
+                <MenuItem mnemonicParsing="false" text="About" />
+              </items>
+            </Menu>
+          </menus>
+        </MenuBar>
+        <ToolBar>
           <items>
-            <MenuItem mnemonicParsing="false" onAction="#close_app" text="Close" />
+            <Label text="IRPasses:" />
+            <ComboBox onAction="#select_ir_pass">
+              <items>
+                <FXCollections fx:factory="observableArrayList">
+                  <String fx:value="Item 1" />
+                  <String fx:value="Item 2" />
+                  <String fx:value="Item 3" />
+                </FXCollections>
+              </items>
+            </ComboBox>
+            <Button mnemonicParsing="false" onAction="#step_ir_pass" text="Step" />
+            <Button mnemonicParsing="false" onAction="#reset_passes" text="Reset" />
           </items>
-        </Menu>
-        <Menu mnemonicParsing="false" text="View">
-          <items>
-            <MenuItem mnemonicParsing="false" onAction="#launch_ir_view" text="IR View" />
-            <MenuItem mnemonicParsing="false" onAction="#launch_cfg_view" text="Control Flow Graph" />
-          </items>
-        </Menu>
-        <Menu mnemonicParsing="false" text="Help">
-          <items>
-            <MenuItem mnemonicParsing="false" text="About" />
-          </items>
-        </Menu>
-      </menus>
-    </MenuBar>
+        </ToolBar>
+      </children>
+    </VBox>
   </top>
 </BorderPane>
