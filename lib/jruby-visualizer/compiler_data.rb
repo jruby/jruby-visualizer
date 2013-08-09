@@ -71,7 +71,7 @@ class CompilerData
     reset_scheduler
   end
   
-  def run_pass_on_all_scopes(pass, scope)
+  def self.run_pass_on_all_scopes(pass, scope)
     pass.run(scope)
     scope.lexical_scopes.each do |lex_scope|
       run_pass_on_all_scopes(pass, lex_scope)
@@ -79,10 +79,16 @@ class CompilerData
   end
   
   def step_ir_passes
-    if @scheduler.has_next
-      pass = @scheduler.next
-      run_pass_on_all_scopes(pass, @ir_scope.get)
-      puts "Executed #{pass.java_class}"
+    if @next_pass
+      @current_pass = @next_pass
+      @next_pass = 
+        if @scheduler.has_next
+          @scheduler.next
+        else
+          nil
+      end
+      self.class.run_pass_on_all_scopes(@current_pass, @ir_scope.get)
+      puts "Executed #{@current_pass.java_class}"
       ir_scope_property.fire_value_changed_event
     end
   end
