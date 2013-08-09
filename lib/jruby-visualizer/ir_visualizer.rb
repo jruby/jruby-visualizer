@@ -32,10 +32,6 @@ class IRVisualizerController
     end
   end
   
-  def step_ir_pass
-    @compiler_data.step_ir_passes
-  end
-  
 end
 
 if __FILE__ == $0

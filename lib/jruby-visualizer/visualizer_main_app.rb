@@ -79,6 +79,10 @@ class JRubyVisualizerController
     end
   end
   
+  def step_ir_pass
+    @compiler_data.step_ir_passes
+  end
+  
   def fill_ast_view(root_node)
     # clear view
     @ast_view.root = nil
