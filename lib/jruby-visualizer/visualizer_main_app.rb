@@ -56,9 +56,9 @@ class JRubyVisualizerController
     @ruby_view.text_property.bind(@compiler_data.ruby_code_property)
     
     # display the IR compiler passes and set the selection to first pass
-    ir_passes_string_list = CompilerData.compiler_passes_names
-    @ir_passes_box.items = FXCollections.observableArrayList(ir_passes_string_list)
-    @ir_passes_box.value = ir_passes_string_list[0]
+    @ir_passes_names = CompilerData.compiler_passes_names
+    @ir_passes_box.items = FXCollections.observableArrayList(@ir_passes_names)
+    @ir_passes_box.value = @current_ir_pass = @ir_passes_names[0]
     
     # background tasks for other views
     @ir_view_task = nil
@@ -66,6 +66,17 @@ class JRubyVisualizerController
     
     # information property back ended by the list view for compile information
     @information = @compile_information.items
+  end
+  
+  def select_ir_pass
+    new_pass = @ir_passes_box.value
+    puts "selected ir pass #{new_pass}"
+    if @ir_passes_names.index(new_pass) >= @ir_passes_names.index(@current_ir_pass)
+      @current_ir_pass = new_pass
+    else
+      # TODO report error or (recommend to) reset scheduler
+      raise "You must reset the scheduler: #{new_pass} has been executed"
+    end
   end
   
   def fill_ast_view(root_node)
