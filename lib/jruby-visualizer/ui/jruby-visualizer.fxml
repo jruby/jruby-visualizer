@@ -62,7 +62,7 @@
         <ToolBar>
           <items>
             <Label text="IRPasses:" />
-            <ComboBox onAction="#select_ir_pass">
+            <ComboBox fx:id="ir_passes_box" onAction="#select_ir_pass">
               <items>
                 <FXCollections fx:factory="observableArrayList">
                   <String fx:value="Item 1" />

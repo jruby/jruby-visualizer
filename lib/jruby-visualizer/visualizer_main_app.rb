@@ -55,6 +55,9 @@ class JRubyVisualizerController
     # bind ruby view to value of ruby_code
     @ruby_view.text_property.bind(@compiler_data.ruby_code_property)
     
+    ir_passes_string_list = CompilerData.compiler_passes_names
+    @ir_passes_box.items = FXCollections.observableArrayList(ir_passes_string_list)
+    
     # background tasks for other views
     @ir_view_task = nil
     @cfg_view_task = nil
