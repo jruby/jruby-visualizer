@@ -90,9 +90,11 @@ class CompilerData
         else
           nil
       end
-      self.class.run_pass_on_all_scopes(@current_pass, @ir_scope.get)
+      scope = @ir_scope.get
+      self.class.run_pass_on_all_scopes(@current_pass, scope)
+      @ir_scope.set(scope)
       puts "Executed #{@current_pass.java_class}"
-      ir_scope_property.fire_value_changed_event
+      #ir_scope_property.fire_value_changed_event
     end
   end
 
