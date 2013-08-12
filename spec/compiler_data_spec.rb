@@ -3,6 +3,7 @@ require 'jruby-visualizer/compiler_data'
 module CompilerDataTestUtils
   @updated_ruby_code = false
   @updated_ast_root = false
+  @updated_ir_scope = false
   
   def add_ruby_code_listener
     @compiler_data.ruby_code_property.add_change_listener do |new_code|
@@ -16,13 +17,20 @@ module CompilerDataTestUtils
     end
   end
   
+  def add_ir_scope_listener
+    @compiler_data.ir_scope_property.add_change_listener do |new_ir_scope|
+      @updated_ir_scope = true
+    end    
+  end
+  
   def add_listeners
     add_ruby_code_listener
     add_ast_root_listener
+    add_ir_scope_listener
   end
   
   def clear_updates
-    @updated_ruby_code, @updated_ast_root = false, false
+    @updated_ruby_code, @updated_ast_root, @updated_ir_scope = false, false, false
   end
 end
 
@@ -39,6 +47,16 @@ describe CompilerData do
     @compiler_data.ruby_code = "i = 1 + 2; puts i"
     @updated_ruby_code.should be_true
     @updated_ast_root.should be_true
+    @updated_ir_scope.should be_true
+  end
+  
+  it "should only update IR Scope after assigning a new AST" do
+    add_listeners
+    
+    @compiler_data.ast_root = JRuby::parse("j = 2; j")
+    @updated_ruby_code.should be_false
+    @updated_ast_root.should be_true
+    @updated_ir_scope.should be_true
   end
 end
 
