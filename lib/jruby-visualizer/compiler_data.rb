@@ -63,11 +63,11 @@ class CompilerData
     @ir_scope = SimpleObjectProperty.new(self, "ir_scope", self.class.build_ir(@ast_root.get))
     # bind change of Ruby code to reparsing an AST and set the property
     ruby_code_property.add_change_listener do |new_code|
-      @ast_root = self.class.parse(new_code)
+      @ast_root.set(self.class.parse(new_code))
     end
     # bind change of AST to rebuilding IR and set the property
     ast_root_property.add_change_listener do |new_ast|
-      @ir_scope = self.class.build_ir(new_ast)
+      @ir_scope.set(self.class.build_ir(new_ast))
     end
     
     # initialize scheduler

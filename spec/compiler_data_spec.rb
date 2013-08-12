@@ -3,7 +3,6 @@ require 'jruby-visualizer/compiler_data'
 describe CompilerData do
   before(:each) do
     @compiler_data = CompilerData.new
-    puts @compiler_data
   end
 
   it "should update AST and IR Scope after updating ruby code" do
