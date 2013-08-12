@@ -98,5 +98,22 @@ describe CompilerData do
     should_has_ir_scope(CompilerDataTestUtils.ir_scope_for(ast_root))
   end
   
+  it "should update IR on executing IR passes" do
+    add_ir_scope_listener
+    while @compiler_data.next_pass
+      clear_updates
+      @compiler_data.step_ir_passes
+      @updated_ir_scope.should be_true
+    end
+  end
+  
+  it "should return nil after stepping all IR passes" do
+    while @compiler_data.next_pass
+      @compiler_data.step_ir_passes
+    end
+    @compiler_data.step_ir_passes.should be_nil
+    @compiler_data.next_pass.should be_nil
+  end
+  
 end
 
