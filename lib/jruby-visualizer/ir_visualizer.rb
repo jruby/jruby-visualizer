@@ -25,12 +25,9 @@ class IRVisualizerController
     @compiler_data = compiler_data
     pretty_ir_string = IRPrettyPrinter.pretty_string(@compiler_data.ir_scope)
     @ir_view.text = pretty_ir_string
-    @compiler_data.ir_scope_property.add_change_listener do |new_scope|
-      if new_scope
-        puts "Updating view"
-        pretty_ir_string = IRPrettyPrinter.pretty_string(new_scope)
-        @ir_view.text = pretty_ir_string
-      end
+    @compiler_data.ir_scope_property.add_invalidation_listener do |new_scope_property|
+      pretty_ir_string = IRPrettyPrinter.pretty_string(new_scope_property.get)
+      @ir_view.text = pretty_ir_string
     end
   end
   
