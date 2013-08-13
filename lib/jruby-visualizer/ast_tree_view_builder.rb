@@ -22,7 +22,6 @@ class ASTTreeViewBuilder
   end
   
   def build_view(node, parent_node=nil)
-    puts node
     if parent_node.nil?
       # root node
       parent_node = @tree_view.root = build_tree_item(node)
@@ -46,6 +45,4 @@ if __FILE__ == $0
   root = JRuby.parse("def foo; 42; end; foo")
   builder = ASTTreeViewBuilder.new(nil)
   builder.build_view(root)
-  
-  #visitor.default_visit(root)
 end
