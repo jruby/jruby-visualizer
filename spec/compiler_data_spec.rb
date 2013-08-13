@@ -6,19 +6,19 @@ module CompilerDataTestUtils
   @updated_ir_scope = false
   
   def add_ruby_code_listener
-    @compiler_data.ruby_code_property.add_change_listener do |new_code|
+    @compiler_data.ruby_code_property.add_invalidation_listener do |new_code|
       @updated_ruby_code = true
     end    
   end
   
   def add_ast_root_listener
-    @compiler_data.ast_root_property.add_change_listener do |new_ast|
+    @compiler_data.ast_root_property.add_invalidation_listener do |new_ast|
       @updated_ast_root = true
     end
   end
   
   def add_ir_scope_listener
-    @compiler_data.ir_scope_property.add_change_listener do |new_ir_scope|
+    @compiler_data.ir_scope_property.add_invalidation_listener do |new_ir_scope|
       @updated_ir_scope = true
     end    
   end
