@@ -1,5 +1,24 @@
 require 'jrubyfx'
 
+class FireChangeObjectProperty < Java::javafx.beans.property.SimpleObjectProperty
+  def initialize(bean=nil, name=nil, init_val=nil)
+    if bean && name && init_val
+      super(bean, name, init_val)
+    elsif bean && name
+      super(bean, name)
+    elsif bean
+      super(bean)
+    else
+      super()
+    end
+  end
+  
+  def set(new_val)
+    super(new_val)
+    fire_value_changed_event
+  end
+end
+
 class CompilerData
   include JRubyFX
   
@@ -60,14 +79,14 @@ class CompilerData
   def initialize(ruby_code='')
     @ruby_code = SimpleStringProperty.new(ruby_code)
     @ast_root = SimpleObjectProperty.new(self, "ast_root", self.class.parse(ruby_code))
-    @ir_scope = SimpleObjectProperty.new(self, "ir_scope", self.class.build_ir(@ast_root.get))
+    @ir_scope = FireChangeObjectProperty.new(self, "ir_scope", self.class.build_ir(@ast_root.get))
     # bind change of Ruby code to reparsing an AST and set the property
-    @ruby_code.add_change_listener do |new_code|
-      @ast_root.set(self.class.parse(new_code))
+    @ruby_code.add_invalidation_listener do |new_code_property|
+      @ast_root.set(self.class.parse(new_code_property.get))
     end
     # bind change of AST to rebuilding IR and set the property
-    @ast_root.add_change_listener do |new_ast|
-      @ir_scope.set(self.class.build_ir(new_ast))
+    @ast_root.add_invalidation_listener do |new_ast_property|
+      @ir_scope.set(self.class.build_ir(new_ast_property.get))
     end
     
     # initialize scheduler
@@ -92,9 +111,7 @@ class CompilerData
       end
       scope = @ir_scope.get
       self.class.run_pass_on_all_scopes(@current_pass, scope)
-      @ir_scope.set(nil)
       @ir_scope.set(scope)
-      #ir_scope_property.fire_value_changed_event
       puts "Executed #{@current_pass.java_class}"
     end
   end
