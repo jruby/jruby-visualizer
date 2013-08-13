@@ -75,13 +75,16 @@ class JRubyVisualizerController
       @current_ir_pass = new_pass
     else
       # TODO report error or (recommend to) reset scheduler
-      raise "You must reset the scheduler: #{new_pass} has been executed"
+      #raise "You must reset the scheduler: #{new_pass} has been executed"
     end
   end
   
   def step_ir_pass
     if @compiler_data.next_pass
       @compiler_data.step_ir_passes
+      @current_ir_pass = CompilerData.pass_to_s(@compiler_data.current_pass)
+      @ir_passes_box.value = @current_ir_pass
+      @information << "Successfully passed #{@current_ir_pass}"
     end
   end
   
