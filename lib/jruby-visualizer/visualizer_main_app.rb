@@ -58,7 +58,7 @@ class JRubyVisualizerController
     # display the IR compiler passes and set the selection to first pass
     @ir_passes_names = CompilerData.compiler_passes_names
     @ir_passes_box.items = FXCollections.observableArrayList(@ir_passes_names)
-    @ir_passes_box.value = @current_ir_pass = @ir_passes_names[0]
+    @ir_passes_box.value = @selected_ir_pass = @ir_passes_names[0]
     
     # background tasks for other views
     @ir_view_task = nil
@@ -69,22 +69,35 @@ class JRubyVisualizerController
   end
   
   def select_ir_pass
-    new_pass = @ir_passes_box.value
-    puts "selected ir pass #{new_pass}"
-    if @ir_passes_names.index(new_pass) >= @ir_passes_names.index(@current_ir_pass)
-      @current_ir_pass = new_pass
+    @selected_ir_pass = @ir_passes_box.value
+    puts "selected ir pass #{@selected_ir_pass}"
+  end
+  
+  def run_previous_passes_for_selection
+    if @compiler_data.current_pass.nil?
+      return # beginning of ir passes
+    end
+    current_pass_name = CompilerData.pass_to_s(@compiler_data.current_pass)
+    select_pass_index = @ir_passes_names.index(@selected_ir_pass)
+    current_pass_index = @ir_passes_names.index(current_pass_name)
+    if select_pass_index == current_pass_index
+      return
+    elsif current_pass_index < select_pass_index
+      @compiler_data.step_ir_passes
+      run_previous_passes_for_selection
     else
-      # TODO report error or (recommend to) reset scheduler
-      #raise "You must reset the scheduler: #{new_pass} has been executed"
+      reset_passes
+      run_previous_passes_for_selection
     end
   end
   
   def step_ir_pass
     if @compiler_data.next_pass
+      run_previous_passes_for_selection
       @compiler_data.step_ir_passes
-      @current_ir_pass = CompilerData.pass_to_s(@compiler_data.current_pass)
-      @ir_passes_box.value = @current_ir_pass
-      @information << "Successfully passed #{@current_ir_pass}"
+      @selected_ir_pass = CompilerData.pass_to_s(@compiler_data.current_pass)
+      @ir_passes_box.value = @selected_ir_pass
+      @information << "Successfully passed #{@selected_ir_pass}"
     end
   end
   
