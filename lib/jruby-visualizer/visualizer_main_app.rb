@@ -7,6 +7,20 @@ require_relative 'jruby_visualizer'
 
 fxml_root File.join(File.dirname(__FILE__), "ui")
 
+class DeletableListCell < Java::javafx.scene.control.ListCell
+  def initialize
+    delete_info_item = MenuItem.new("Delete Information")
+    @delete_menu = ContextMenu.new(delete_info_item)
+    delete_info_item.on_action do
+      # TODO verify if parent from list cell is really a list view
+      list_view = get_parent
+      list_view.delete(self)
+    end
+    
+    # TODO react on right click and show @delete_menu as set_context_menu
+  end
+end
+
 class SubAppTask < Java::javafx.concurrent.Task
   
   def initialize(view_name)
