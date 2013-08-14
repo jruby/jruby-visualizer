@@ -8,6 +8,8 @@ require_relative 'jruby_visualizer'
 fxml_root File.join(File.dirname(__FILE__), "ui")
 
 class DeletableListCell < Java::javafx.scene.control.ListCell
+  include JRubyFX
+  
   def initialize
     delete_info_item = MenuItem.new("Delete Information")
     @delete_menu = ContextMenu.new(delete_info_item)
@@ -16,8 +18,7 @@ class DeletableListCell < Java::javafx.scene.control.ListCell
       list_view = get_parent
       list_view.delete(self)
     end
-    
-    # TODO react on right click and show @delete_menu as set_context_menu
+    set_context_menu(@delete_menu)
   end
 end
 
@@ -78,6 +79,9 @@ class JRubyVisualizerController
     @ir_view_task = nil
     @cfg_view_task = nil
     
+    p @compile_information.get_cell_factory
+    @compile_information.cell_factory = proc { DeletableListCell.new }
+    p @compile_information.get_cell_factory
     # information property back ended by the list view for compile information
     @information = @compile_information.items
   end
