@@ -20,6 +20,28 @@ class DeletableListCell < Java::javafx.scene.control.ListCell
     end
     set_context_menu(@delete_menu)
   end
+  
+  def updateItem(item, empty)
+    super(item, empty)
+    
+    if empty
+      set_text(nil)
+      set_graphic(nil)
+    else
+      set_text(get_string)
+      set_graphic(nil)
+    end
+    
+  end
+  
+  private
+  def get_string
+    if item
+      item.to_s
+    else
+      ''
+    end
+  end
 end
 
 class SubAppTask < Java::javafx.concurrent.Task
