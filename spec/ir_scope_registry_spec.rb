@@ -5,7 +5,8 @@ describe IRScopeRegistry do
   include JRubyVisualizerTestUtils
   
   before(:each) do
-    ast_root = ast_for("class Foo; def foo; 42; end; end; Foo.new.foo")
+    @ruby_code = "class Foo; def foo; 42; end; end; Foo.new.foo"
+    ast_root = ast_for(@ruby_code)
     @root_scope = ir_scope_for(ast_root)
     @ir_reg = IRScopeRegistry.new(@root_scope)
   end
@@ -13,6 +14,10 @@ describe IRScopeRegistry do
   it "should be empty after clearing" do
     @ir_reg.clear
     @ir_reg.scopes.empty?.should be_true
+  end
+  
+  it "should contain three scopes for #{@ruby_code}" do
+    @ir_reg.scopes.size.should be(3)
   end
 end
 
