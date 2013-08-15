@@ -16,12 +16,11 @@ class DeletableListCell < Java::javafx.scene.control.ListCell
     delete_info_item = MenuItem.new("Delete Information")
     @delete_menu = ContextMenu.new(delete_info_item)
     delete_info_item.on_action do
-      # TODO verify if parent from list cell is really a list view
-      list_view = get_parent
-      p list_view.java_class
-      puts "try to delete from #{list_view}"
-      puts "found: #{list_view.items.include?(self)}"
-#      #list_view.delete(self)
+      items = list_view.items
+      info_string = get_string
+      if items.include?(info_string)
+        items.remove_all(info_string)
+      end
     end
   end
   
@@ -34,7 +33,7 @@ class DeletableListCell < Java::javafx.scene.control.ListCell
     else
       set_text(get_string)
       set_graphic(nil)
-      set_context_menu(delete_menu)
+      set_context_menu(@delete_menu)
     end
     
   end
@@ -47,6 +46,7 @@ class DeletableListCell < Java::javafx.scene.control.ListCell
       ''
     end
   end
+  
 end
 
 class SubAppTask < Java::javafx.concurrent.Task
@@ -106,9 +106,8 @@ class JRubyVisualizerController
     @ir_view_task = nil
     @cfg_view_task = nil
     
-    p @compile_information.get_cell_factory
+    # Use ListCell with Delete Context Menu in the view for compile information
     @compile_information.cell_factory = proc { DeletableListCell.new }
-    p @compile_information.get_cell_factory
     # information property back ended by the list view for compile information
     @information = @compile_information.items
   end
