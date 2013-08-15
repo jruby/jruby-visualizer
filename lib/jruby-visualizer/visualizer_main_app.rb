@@ -10,15 +10,19 @@ fxml_root File.join(File.dirname(__FILE__), "ui")
 class DeletableListCell < Java::javafx.scene.control.ListCell
   include JRubyFX
   
+  attr_reader :delete_menu
+  
   def initialize
     delete_info_item = MenuItem.new("Delete Information")
     @delete_menu = ContextMenu.new(delete_info_item)
     delete_info_item.on_action do
       # TODO verify if parent from list cell is really a list view
       list_view = get_parent
-      list_view.delete(self)
+      p list_view.java_class
+      puts "try to delete from #{list_view}"
+      puts "found: #{list_view.items.include?(self)}"
+#      #list_view.delete(self)
     end
-    set_context_menu(@delete_menu)
   end
   
   def updateItem(item, empty)
@@ -30,6 +34,7 @@ class DeletableListCell < Java::javafx.scene.control.ListCell
     else
       set_text(get_string)
       set_graphic(nil)
+      set_context_menu(delete_menu)
     end
     
   end
