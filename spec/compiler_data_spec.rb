@@ -1,6 +1,8 @@
 require 'jruby-visualizer/compiler_data'
+require 'jruby_visualizer_test_utils'
 
 module CompilerDataTestUtils
+  include JRubyVisualizerTestUtils
   @updated_ruby_code = false
   @updated_ast_root = false
   @updated_ir_scope = false
@@ -41,24 +43,6 @@ module CompilerDataTestUtils
     @compiler_data.ir_scope.to_s == other_ir_scope.to_s
   end
   
-  def self.ast_for(ruby_code)
-    JRuby::parse(ruby_code)
-  end
-  
-  def self.ir_scope_for(ast_root)
-    ir_manager = JRuby::runtime.ir_manager
-    ir_manager.dry_run = true
-
-    builder = 
-      if JRuby::runtime.is1_9?
-        org.jruby.ir.IRBuilder19
-      else
-        org.jruby.ir.IRBuilder
-      end
-    builder = builder.new(ir_manager)
-    builder.build_root(ast_root)
-  end
-  
 end
 
 describe CompilerData do
@@ -80,7 +64,7 @@ describe CompilerData do
   it "should only update IR Scope after assigning a new AST" do
     add_listeners
     
-    @compiler_data.ast_root = CompilerDataTestUtils.ast_for("j = 2; j") 
+    @compiler_data.ast_root = ast_for("j = 2; j") 
     @updated_ruby_code.should be_false
     @updated_ast_root.should be_true
     @updated_ir_scope.should be_true
@@ -89,13 +73,13 @@ describe CompilerData do
   it "should parse the AST implicitly" do
     ruby_code = "a = 1; b = 4; puts a + b"
     @compiler_data.ruby_code = ruby_code
-    should_has_ast(CompilerDataTestUtils.ast_for(ruby_code))
+    should_has_ast(ast_for(ruby_code))
   end
   
   it "should build the IR implicitly" do
-    ast_root = CompilerDataTestUtils.ast_for("i = 42; puts i")
+    ast_root = ast_for("i = 42; puts i")
     @compiler_data.ast_root = ast_root
-    should_has_ir_scope(CompilerDataTestUtils.ir_scope_for(ast_root))
+    should_has_ir_scope(ir_scope_for(ast_root))
   end
   
   it "should update IR on executing IR passes" do
@@ -116,4 +100,3 @@ describe CompilerData do
   end
   
 end
-
