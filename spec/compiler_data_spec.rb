@@ -46,7 +46,7 @@ module CompilerDataTestUtils
 end
 
 describe CompilerData do
-  include CompilerDataTestUtils 
+  include CompilerDataTestUtils
   
   before(:each) do
     @compiler_data = CompilerData.new
