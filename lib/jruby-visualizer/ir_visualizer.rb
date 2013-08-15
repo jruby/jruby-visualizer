@@ -19,7 +19,7 @@ class IRVisualizerController
   include JRubyFX::Controller
   fxml "ir-view.fxml"
   
-  attr_accessor :compiler_data
+  attr_reader :compiler_data
   
   def initialize(compiler_data)
     @compiler_data = compiler_data
