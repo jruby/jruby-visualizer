@@ -13,7 +13,7 @@ describe IRScopeRegistry do
 
   it "should be empty after clearing" do
     @ir_reg.clear
-    @ir_reg.scopes.empty?.should be_true
+    @ir_reg.scopes.should be_empty
   end
   
   it "should contain three scopes for #{@ruby_code}" do
