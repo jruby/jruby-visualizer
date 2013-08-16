@@ -18,26 +18,26 @@ class CFGVisualizerController
   include JRubyFX::Controller
   fxml "cfg-view.fxml"
   
-  attr_reader :compiler_data, :ir_scopes
+  attr_reader :compiler_data, :ir_registry
   
   def initialize(compiler_data)
     @compiler_data = compiler_data
     
     # read scopes into the registry
-    @ir_scopes = IRScopeRegistry.new(@compiler_data.ir_scope)
+    @ir_registry = IRScopeRegistry.new(@compiler_data.ir_scope)
     read_registry_into_selector
     # listen to changes of the ir_scope property
     @compiler_data.ir_scope_property.add_invalidation_listener do |new_scope_property|
       root_scope = new_scope_property.get
-      @ir_scopes.clear
-      @ir_scopes.fill_registry(root_scope)
+      @ir_registry.clear
+      @ir_registry.fill_registry(root_scope)
       # TODO read the new scopes into the UI
       read_registry_into_selector
     end
   end
   
   def read_registry_into_selector
-    scopes_keys = @ir_scopes.scopes.keys.map do |key|
+    scopes_keys = @ir_registry.scopes.keys.map do |key|
       key.to_s
     end
     scopes_keys.sort!
