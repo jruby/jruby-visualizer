@@ -99,7 +99,7 @@ class JRubyVisualizerController
     
     # display the IR compiler passes and set the selection to first pass
     @ir_passes_names = CompilerData.compiler_passes_names
-    @ir_passes_box.items = FXCollections.observableArrayList(@ir_passes_names)
+    @ir_passes_box.items = FXCollections.observable_array_list(@ir_passes_names)
     @ir_passes_box.value = @selected_ir_pass = @ir_passes_names[0]
     
     # background tasks for other views
