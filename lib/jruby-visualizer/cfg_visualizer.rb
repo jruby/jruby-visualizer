@@ -25,19 +25,31 @@ class CFGVisualizerController
     
     # read scopes into the registry
     @ir_scopes = IRScopeRegistry.new(@compiler_data.ir_scope)
+    read_registry_into_selector
     # listen to changes of the ir_scope property
     @compiler_data.ir_scope_property.add_invalidation_listener do |new_scope_property|
       root_scope = new_scope_property.get
       @ir_scopes.clear
       @ir_scopes.fill_registry(root_scope)
       # TODO read the new scopes into the UI
+      read_registry_into_selector
     end
+  end
+  
+  def read_registry_into_selector
+    scopes_keys = @ir_scopes.scopes.keys.map do |key|
+      key.to_s
+    end
+    scopes_keys.sort!
+    @ir_scope_selector.items = FXCollections.observable_array_list(scopes_keys)
+    @ir_scope_selector.value = scopes_keys[0]
+    
   end
   
 end
 
 if __FILE__ == $0
   JRubyVisualizer.compiler_data = CompilerData.new(
-    "a = 1 + 4 + 7;\nc = nil;\nj = 1;\ni = 3 + j;\nputs i")
+    "\nclass Foo\n\ndef bar; 42; end; end;\nFoo.new.bar")
   CFGVisualizer.launch
 end
