@@ -38,5 +38,12 @@ describe IRScopeRegistry do
     @ir_reg.scopes.should include(:'bar[-:3]')
   end
   
+  it "should refill correctly after clearing" do
+    @ir_reg.clear
+    @ir_reg.fill_registry(@root_scope.lexical_scopes.get(0))
+    @ir_reg.scopes.size.should be(2)
+    @ir_reg.scopes.should include(:'Foo[-:1]')
+  end
+  
 end
 
