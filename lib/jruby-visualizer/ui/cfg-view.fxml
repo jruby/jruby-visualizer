@@ -11,20 +11,7 @@
 
 <BorderPane prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2">
   <center>
-    <TabPane id="ir_scopes" fx:id="cfg_scopes_view" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE">
-      <tabs>
-        <Tab text="Untitled Tab 1">
-          <content>
-            <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-          </content>
-        </Tab>
-        <Tab text="Untitled Tab 2">
-          <content>
-            <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-          </content>
-        </Tab>
-      </tabs>
-    </TabPane>
+    <TabPane id="ir_scopes" fx:id="cfg_scopes_view" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" />
   </center>
   <padding>
     <Insets />
