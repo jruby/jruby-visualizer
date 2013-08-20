@@ -43,7 +43,10 @@ class CFGVisualizerController
     scopes_keys.sort!
     @ir_scope_selector.items = FXCollections.observable_array_list(scopes_keys)
     @ir_scope_selector.value = scopes_keys[0]
-    
+  end
+  
+  def select_scope
+    selected_scope = @ir_scope_selector.value
   end
   
 end

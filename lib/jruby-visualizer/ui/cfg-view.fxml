@@ -37,7 +37,7 @@
             <Insets bottom="5.0" left="5.0" top="8.0" />
           </HBox.margin>
         </Label>
-        <ComboBox fx:id="ir_scope_selector" prefWidth="201.0">
+        <ComboBox fx:id="ir_scope_selector" onAction="#select_scope" prefWidth="201.0">
           <items>
             <FXCollections fx:factory="observableArrayList">
               <String fx:value="Item 1" />
