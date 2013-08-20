@@ -51,6 +51,10 @@ class CFGVisualizerController
   end
   
   def open_cfg_tab
+    if @selected_scope.nil?
+      return
+    end
+    
     tabs = @cfg_scopes_view.tabs
     is_tab_opened = tabs.find do |tab|
       # get string value from StringProperty name
