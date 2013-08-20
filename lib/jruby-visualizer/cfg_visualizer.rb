@@ -31,8 +31,8 @@ class CFGVisualizerController
       root_scope = new_scope_property.get
       @ir_registry.clear
       @ir_registry.fill_registry(root_scope)
-      # TODO read the new scopes into the UI
       read_registry_into_selector
+      update_tabs
     end
   end
   
@@ -65,7 +65,7 @@ class CFGVisualizerController
       end
       cfg = ir_scope.cfg
       content = "Graph: #{cfg.to_string_graph}\nInstr: #{cfg.to_string_instrs}"
-      # TODO listen to events if the ir scope changes
+      # TODO use custom cfg objects and graph drawing instead of text representation
       tab.set_content(TextArea.new(content))
       tabs << tab
       # set focus on selected tab
@@ -75,6 +75,22 @@ class CFGVisualizerController
   
   def get_selected_scope
     @ir_registry.scopes[@selected_scope.to_sym]
+  end
+  
+  def update_tabs
+    tabs = @cfg_scopes_view.tabs
+    tabs.each do |tab|
+      scope_name = tab.text
+      ir_scope = @ir_registry.scopes[scope_name.to_sym]
+      if ir_scope.cfg.nil?
+        ir_scope.buildCFG
+      end
+      # TODO read and diff on custom cfg objects
+      cfg = ir_scope.cfg
+      content = "Graph: #{cfg.to_string_graph}\nInstr: #{cfg.to_string_instrs}"
+      # TODO listen to events if the ir scope changes
+      tab.set_content(TextArea.new(content))
+    end
   end
   
 end
