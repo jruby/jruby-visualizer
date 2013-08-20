@@ -47,7 +47,6 @@ class CFGVisualizerController
   
   def select_scope
     @selected_scope = @ir_scope_selector.value
-    p @cfg_scopes_view.tabs
     open_cfg_tab
   end
   
@@ -55,10 +54,8 @@ class CFGVisualizerController
     tabs = @cfg_scopes_view.tabs
     is_tab_opened = tabs.find do |tab|
       # get string value from StringProperty name
-      tab.text.get == @selected_scope
+      tab.text == @selected_scope
     end
-    
-    p is_tab_opened
     
     unless is_tab_opened
       tab = Tab.new(@selected_scope)
