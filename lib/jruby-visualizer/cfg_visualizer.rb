@@ -47,16 +47,20 @@ class CFGVisualizerController
   
   def select_scope
     @selected_scope = @ir_scope_selector.value
+    p @cfg_scopes_view.tabs
+    open_cfg_tab
   end
   
   def open_cfg_tab
     tabs = @cfg_scopes_view.tabs
     is_tab_opened = tabs.find do |tab|
       # get string value from StringProperty name
-      tab.name.get == @selected_scope
+      tab.text.get == @selected_scope
     end
     
-    unless is_tab_openend
+    p is_tab_opened
+    
+    unless is_tab_opened
       tab = Tab.new(@selected_scope)
       ir_scope = get_selected_scope
       if ir_scope.cfg.nil?
@@ -66,6 +70,7 @@ class CFGVisualizerController
       content = "Graph: #{cfg.to_string_graph}\nInstr: #{cfg.to_string_instrs}"
       # TODO listen to events if the ir scope changes
       tab.set_content(TextArea.new(content))
+      tabs << tab
     end
   end
   
