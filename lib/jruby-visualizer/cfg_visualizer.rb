@@ -68,6 +68,8 @@ class CFGVisualizerController
       # TODO listen to events if the ir scope changes
       tab.set_content(TextArea.new(content))
       tabs << tab
+      # set focus on selected tab
+      @cfg_scopes_view.selection_model.select(tab)
     end
   end
   
