@@ -42,11 +42,35 @@ class CFGVisualizerController
     end
     scopes_keys.sort!
     @ir_scope_selector.items = FXCollections.observable_array_list(scopes_keys)
-    @ir_scope_selector.value = scopes_keys[0]
+    @ir_scope_selector.value = @selected_scope = scopes_keys[0]
   end
   
   def select_scope
-    selected_scope = @ir_scope_selector.value
+    @selected_scope = @ir_scope_selector.value
+  end
+  
+  def open_cfg_tab
+    tabs = @cfg_scopes_view.tabs
+    is_tab_opened = tabs.find do |tab|
+      # get string value from StringProperty name
+      tab.name.get == @selected_scope
+    end
+    
+    unless is_tab_openend
+      tab = Tab.new(@selected_scope)
+      ir_scope = get_selected_scope
+      if ir_scope.cfg.nil?
+        ir_scope.buildCFG
+      end
+      cfg = ir_scope.cfg
+      content = "Graph: #{cfg.to_string_graph}\nInstr: #{cfg.to_string_instrs}"
+      # TODO listen to events if the ir scope changes
+      tab.set_content(TextArea.new(content))
+    end
+  end
+  
+  def get_selected_scope
+    @ir_registry.scopes[@selected_scope.to_sym]
   end
   
 end
