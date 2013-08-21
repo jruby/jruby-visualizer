@@ -9,14 +9,7 @@ class ASTTreeViewBuilder
   end
   
   def build_tree_item(node)
-    node_information =
-      if node.is_a? Java::org.jruby.ast.types.INameNode
-        name_node = node.to_java(Java::org.jruby.ast.types.INameNode)
-        ":#{name_node.name}"
-      else
-        ""
-      end
-    
+    node_information = node.respond_to?(:name) ? ":#{node.name}" : ""
     node_string = "#{node.node_name}#{node_information} #{node.position.start_line}"
     TreeItem.new(node_string)
   end
@@ -32,11 +25,7 @@ class ASTTreeViewBuilder
       parent_node = node_tree_item
     end
     
-    if node.child_nodes.size
-      node.child_nodes.each do |child|
-        build_view(child, parent_node)
-      end
-    end
+    node.child_nodes.each { |child| build_view(child, parent_node) }
   end
 end
 
