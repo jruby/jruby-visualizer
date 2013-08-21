@@ -13,20 +13,18 @@ class ASTTreeViewBuilder
     node_string = "#{node.node_name}#{node_information} #{node.position.start_line}"
     TreeItem.new(node_string)
   end
-  
-  def build_view(node, parent_node=nil)
-    if parent_node.nil?
-      # root node
-      parent_node = @tree_view.root = build_tree_item(node)
-    else
-      # non root node
-      node_tree_item = build_tree_item(node)
-      parent_node.children << node_tree_item
-      parent_node = node_tree_item
-    end
-    
-    node.child_nodes.each { |child| build_view(child, parent_node) }
+
+  def build_view(root)
+    @tree_view.root = build_tree_item(root)
+    root.child_nodes.each { |child| build_view_inner(child, @tree_view.root) }
   end
+  
+  def build_view_inner(node, parent_item)
+    tree_item = build_tree_item(node)
+    parent_item.children << tree_item
+    node.child_nodes.each { |child| build_view_inner(child, tree_item) }
+  end
+  private :build_view_inner
 end
 
 if __FILE__ == $0
