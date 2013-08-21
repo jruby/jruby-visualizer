@@ -1,16 +1,9 @@
 require 'jrubyfx'
 
 class FireChangeObjectProperty < Java::javafx.beans.property.SimpleObjectProperty
-  def initialize(bean=nil, name=nil, init_val=nil)
-    if bean && name && init_val
-      super(bean, name, init_val)
-    elsif bean && name
-      super(bean, name)
-    elsif bean
-      super(bean)
-    else
-      super()
-    end
+  def initialize(*args)
+    raise ArgumentError.new "wrong number of arguments (#{args.length} for 3)" if args.length > 3
+    super
   end
   
   def set(new_val)

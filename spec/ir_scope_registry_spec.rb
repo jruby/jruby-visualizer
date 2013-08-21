@@ -21,7 +21,7 @@ describe IRScopeRegistry do
   end
   
   it "should format the file scope - to a symbol" do
-    file_scope_symbol = IRScopeRegistry.ir_scope_to_key(@root_scope)
+    file_scope_symbol = @root_scope.key
     file_scope_symbol.should be_an_instance_of Symbol
     file_scope_symbol.should == :'-[-:0]'
   end
