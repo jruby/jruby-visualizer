@@ -63,7 +63,7 @@ class CFGVisualizerController
     
     unless is_tab_opened
       tab = Tab.new(@selected_scope)
-      cfg = extract_cfg(get_selected_scope)
+      cfg = get_selected_scope.cfg!
       content = "Graph: #{cfg.to_string_graph}\nInstr: #{cfg.to_string_instrs}"
       # TODO use custom cfg objects and graph drawing instead of text representation
       tab.set_content(TextArea.new(content))
@@ -81,18 +81,12 @@ class CFGVisualizerController
     @cfg_scopes_view.tabs.each do |tab|
       scope_name = tab.text
       # TODO read and diff on custom cfg objects
-      cfg = extract_cfg(@ir_registry.scopes[scope_name.to_sym])
+      cfg = @ir_registry.scopes[scope_name.to_sym].cfg!
       content = "Graph: #{cfg.to_string_graph}\nInstr: #{cfg.to_string_instrs}"
       # TODO listen to events if the ir scope changes
       tab.set_content(TextArea.new(content))
     end
   end
-
-  def extract_cfg(ir_scope)
-    ir_scope.buildCFG unless ir_scope.cfg
-    ir_scope.cfg
-  end
-  private :extract_cfg
   
 end
 
