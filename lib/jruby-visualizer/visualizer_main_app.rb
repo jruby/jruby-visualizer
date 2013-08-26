@@ -144,10 +144,15 @@ class JRubyVisualizerController
     end
   end
   
+  def clear_information_view
+    @information.clear
+  end
+  
   def reset_passes
     @compiler_data.reset_scheduler
     @selected_ir_pass = @ir_passes_names[0]
     @ir_passes_box.value = @selected_ir_pass
+    clear_information_view
   end
   
   def fill_ast_view(root_node)
