@@ -103,8 +103,8 @@ class JRubyVisualizerController
     @ir_passes_box.value = @selected_ir_pass = @ir_passes_names[0]
     
     # background tasks for other views
-    @ir_view_task = nil
-    @cfg_view_task = nil
+    @ir_view_task = SubAppTask.new(:ir_view)
+    @cfg_view_task = SubAppTask.new(:cfg_view)
     
     # Use ListCell with Delete Context Menu in the view for compile information
     @compile_information.cell_factory = proc { DeletableListCell.new }
@@ -163,7 +163,11 @@ class JRubyVisualizerController
   end
   
   def launch_ir_view
-    if @ir_view_task.nil?
+    worker_state = Java::javafx.concurrent.Worker::State
+    state = @ir_view_task.state
+    if state == worker_state::READY
+      Platform.run_later(@ir_view_task)
+    elsif state != worker_state::RUNNING
       @ir_view_task = SubAppTask.new(:ir_view)
       Platform.run_later(@ir_view_task)
     end
@@ -171,7 +175,6 @@ class JRubyVisualizerController
   
   def launch_cfg_view
     if @cfg_view_task.nil?
-      @cfg_view_task = SubAppTask.new(:cfg_view)
       Platform.run_later(@cfg_view_task)
     end
   end
