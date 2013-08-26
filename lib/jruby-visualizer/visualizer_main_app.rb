@@ -174,7 +174,12 @@ class JRubyVisualizerController
   end
   
   def launch_cfg_view
-    if @cfg_view_task.nil?
+    worker_state = Java::javafx.concurrent.Worker::State
+    state = @cfg_view_task.state
+    if state == worker_state::READY
+      Platform.run_later(@cfg_view_task)
+    elsif state != worker_state::RUNNING
+      @cfg_view_task = SubAppTask.new(:cfg_view)
       Platform.run_later(@cfg_view_task)
     end
   end
