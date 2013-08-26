@@ -25,7 +25,6 @@ class CompilerData
   end
   
   def self.create_ir_builder
-    JRuby::IR.compiler_debug = true
     ir_manager = JRuby::runtime.ir_manager
     ir_manager.dry_run = true
 

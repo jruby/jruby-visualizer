@@ -114,7 +114,6 @@ class JRubyVisualizerController
   
   def select_ir_pass
     @selected_ir_pass = @ir_passes_box.value
-    puts "selected ir pass #{@selected_ir_pass}"
   end
   
   def run_previous_passes_for_selection
