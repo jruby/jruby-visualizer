@@ -30,13 +30,15 @@ class BasicBlockListCell < Java::javafx.scence.control.ListCell
 end
 
 class ControlFlowGraphView < Java::javafx.scene.control.ListView
+  include JRubyFX
+  
   def initialize(cfg)
     @cfg = cfg
-    @cfg.sorted_basic_blocks.each do |bb|
-      # TODO create observable_list of basicblockView
+    bb_cells = @cfg.sorted_basic_blocks.map do |bb|
+      BasicBlockListCell.new(bb, @cfg)
     end
-    # TODO inject observable_list to list_view constructor
-    #super(bb_cells)
+    @bb_cells = FXCollections.observable_array_list(bb_cells)
+    super(@bb_cells)
   end
   
 end
