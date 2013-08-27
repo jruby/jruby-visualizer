@@ -4,8 +4,10 @@ class BasicBlockListCell < Java::javafx.scene.control.ListCell
   include JRubyFX
   
   def initialize(basic_block, cfg)
+    super()
     # TODO compose with a textarea and buttons for successors of this basic block
     @basic_block = basic_block
+    p(@basic_block.to_string_instrs)
     @instrs_box = TextArea.new(@basic_block.to_string_instrs)
     # TODO group instrs_box and successors as VBox
     @successors = cfg.get_outgoing_destinations(@basic_block)
@@ -36,9 +38,7 @@ class ControlFlowGraphView < Java::javafx.scene.control.ListView
     @cfg = cfg
     @bb_cells = FXCollections.observable_array_list([])
     @cfg.sorted_basic_blocks.each do |bb|
-      p(bb)
       bb_cell = BasicBlockListCell.new(bb, cfg)
-      p(bb_cell)
       @bb_cells << bb_cell
     end
     super(@bb_cells)
