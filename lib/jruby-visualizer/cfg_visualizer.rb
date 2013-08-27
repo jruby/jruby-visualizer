@@ -1,6 +1,7 @@
 require 'jrubyfx'
 require_relative 'jruby_visualizer'
 require_relative 'ir_scope_registry'
+require_relative 'control_flow_graph_view'
 
 fxml_root File.join(File.dirname(__FILE__), "ui")
 
@@ -64,9 +65,9 @@ class CFGVisualizerController
     unless is_tab_opened
       tab = Tab.new(@selected_scope)
       cfg = get_selected_scope.cfg!
-      content = "Graph: #{cfg.to_string_graph}\nInstr: #{cfg.to_string_instrs}"
+      #content = "Graph: #{cfg.to_string_graph}\nInstr: #{cfg.to_string_instrs}"
       # TODO use custom cfg objects and graph drawing instead of text representation
-      tab.set_content(TextArea.new(content))
+      tab.set_content(ControlFlowGraphView.new(cfg))
       tabs << tab
       # set focus on selected tab
       @cfg_scopes_view.selection_model.select(tab)
@@ -82,9 +83,9 @@ class CFGVisualizerController
       scope_name = tab.text
       # TODO read and diff on custom cfg objects
       cfg = @ir_registry.scopes[scope_name.to_sym].cfg!
-      content = "Graph: #{cfg.to_string_graph}\nInstr: #{cfg.to_string_instrs}"
+      #content = "Graph: #{cfg.to_string_graph}\nInstr: #{cfg.to_string_instrs}"
       # TODO listen to events if the ir scope changes
-      tab.set_content(TextArea.new(content))
+      tab.set_content(ControlFlowGraphView.new(cfg))
     end
   end
   

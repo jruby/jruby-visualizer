@@ -1,6 +1,6 @@
 require 'jrubyfx'
 
-class BasicBlockListCell < Java::javafx.scence.control.ListCell
+class BasicBlockListCell < Java::javafx.scene.control.ListCell
   include JRubyFX
   
   def initialize(basic_block, cfg)
@@ -8,7 +8,7 @@ class BasicBlockListCell < Java::javafx.scence.control.ListCell
     @basic_block = basic_block
     @instrs_box = TextArea.new(@basic_block.to_string_instrs)
     # TODO group instrs_box and successors as VBox
-    @successors = Array.new(cfg.outgoing_destinations(@basic_block))
+    @successors = cfg.get_outgoing_destinations(@basic_block)
   end
   
   def updateItem(item, empty)
@@ -34,10 +34,13 @@ class ControlFlowGraphView < Java::javafx.scene.control.ListView
   
   def initialize(cfg)
     @cfg = cfg
-    bb_cells = @cfg.sorted_basic_blocks.map do |bb|
-      BasicBlockListCell.new(bb, @cfg)
+    @bb_cells = FXCollections.observable_array_list([])
+    @cfg.sorted_basic_blocks.each do |bb|
+      p(bb)
+      bb_cell = BasicBlockListCell.new(bb, cfg)
+      p(bb_cell)
+      @bb_cells << bb_cell
     end
-    @bb_cells = FXCollections.observable_array_list(bb_cells)
     super(@bb_cells)
   end
   
