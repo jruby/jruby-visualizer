@@ -31,21 +31,27 @@ class BasicBlockListCell < Java::javafx.scene.control.ListCell
   
 end
 
-class BasicBlockView < Java::javafx.scene.layout.VBox
+class BasicBlockBox < Java::javafx.scene.layout.VBox
   include JRubyFX
+  
+  attr_reader :basic_block, :instrs_box, :successors, :successor_buttons
   
   def initialize(basic_block, cfg)
     super(5)
     @basic_block = basic_block
-    p(@basic_block.to_string_instrs)
-    p(@basic_block.to_s)
     @instrs_box = TextArea.new(@basic_block.to_string_instrs)
-    # TODO group instrs_box and successors as VBox
-    @successors = cfg.get_outgoing_destinations(@basic_block)
-    successors_names = @successors.inject("successors: ") do |res,bb|  
-      res + ' ' + bb.to_s
+    @successors = cfg.get_outgoing_destinations(@basic_block).to_a
+    unless @successors.empty?
+      @successor_buttons = @successors.map { |bb| Button.new(bb.to_s) }
+    
+      successors_layout = HBox.new(5)
+      successors_layout.get_children << Label.new("Successors: ")
+      successors_layout.get_children.add_all(@successor_buttons)
+    
+      get_children.add_all(@instrs_box, successors_layout)
+    else
+      get_children << @instrs_box
     end
-    get_children.add_all(@instrs_box, Label.new(successors_names))
   end
   
 end
@@ -58,8 +64,7 @@ class ControlFlowGraphView < Java::javafx.scene.control.ListView
     @bb_cells = FXCollections.observable_array_list([])
     @cfg.sorted_basic_blocks.each do |bb|
       #bb_cell = BasicBlockListCell.new(bb, cfg)
-      bb_cell = BasicBlockView.new(bb, cfg)
-      #bb_cell = TextArea.new(bb.to_string_instrs)
+      bb_cell = BasicBlockBox.new(bb, cfg)
       @bb_cells << bb_cell
     end
     super(@bb_cells)
