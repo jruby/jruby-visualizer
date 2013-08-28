@@ -46,7 +46,8 @@ class BasicBlockBox < Java::javafx.scene.layout.VBox
           index = i.to_i - 1
           p(index)
           # then select the index inside of the selection_model
-          #cfg_list_view.selection_model.select(index)
+          cfg_list_view.selection_model.select(index)
+          cfg_list_view.focus_model.focus(index)
           p(cfg_list_view)
           p(cfg_list_view.class)
         end
