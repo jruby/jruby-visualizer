@@ -41,6 +41,12 @@ class BasicBlockBox < Java::javafx.scene.layout.VBox
       @successor_buttons = @successors.map do |bb|
         button = Button.new(bb.to_s)
         button.set_on_action do
+          # TODO retrieve target index from button
+          i = button.get_text.scan( /.*\[(\d+):.*\]/)[0][0]
+          index = i.to_i - 1
+          p(index)
+          # then select the index inside of the selection_model
+          #cfg_list_view.selection_model.select(index)
           p(cfg_list_view)
           p(cfg_list_view.class)
         end
