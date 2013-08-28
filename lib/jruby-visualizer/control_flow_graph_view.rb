@@ -1,32 +1,5 @@
 require 'jrubyfx'
 
-class BasicBlockListCell < Java::javafx.scene.control.ListCell
-  include JRubyFX
-  
-  def initialize(basic_block, cfg)
-    super()
-    
-    @bb_box = BasicBlockBox.new(basic_block, cfg, list_view)
-    set_item(@bb_box)
-  end
-  
-  def updateItem(item, empty)
-    super(item, empty)
-    
-    # TODO update layout with a new layout manager
-    # |bb_instrs|links to successors|
-    if empty
-      #set_text(nil)
-      #set_graphic(nil)
-    else
-      #set_text(@bb_box.basic_block.to_s)
-      # TODO use custom layout on instrs and successors
-      #set_graphic(@bb_box)
-    end
-  end
-  
-end
-
 class BasicBlockBox < Java::javafx.scene.layout.VBox
   include JRubyFX
   
@@ -73,7 +46,6 @@ class ControlFlowGraphView < Java::javafx.scene.layout.BorderPane
     @cfg_list_view = ListView.new()
     @bb_cells = FXCollections.observable_array_list([])
     @cfg.sorted_basic_blocks.each do |bb|
-      #bb_cell = BasicBlockListCell.new(bb, cfg)
       bb_cell = BasicBlockBox.new(bb, cfg, @cfg_list_view)
       @bb_cells << bb_cell
     end
