@@ -9,6 +9,7 @@ class BasicBlockBox < Java::javafx.scene.layout.VBox
     super(5)
     @basic_block = basic_block
     @instrs_box = TextArea.new(@basic_block.to_string_instrs)
+    @instrs_box.set_style("-fx-font-family: monospaced")
     @successors = cfg.get_outgoing_destinations(@basic_block).to_a
     unless @successors.empty?
       @successor_buttons = @successors.map do |bb|
