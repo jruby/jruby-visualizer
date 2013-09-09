@@ -49,16 +49,8 @@ module JRubyVisualizer
       inject_pass_listener
     end
     @@compiler_data = CompilerData.new(ruby_code)
-    
     # launch App with Ruby code as input
     launch
-    
-    #builder = set_up_ir_builder
-    #scope = builder.build_root(root_node)
- 
-    # TODO IR stepping with scheduler as javafx tasks
-    #run_ir_passes(scope)
-    # TODO visualize AST and scope
   end
  
 end
