@@ -28,13 +28,7 @@ class CompilerData
     ir_manager = JRuby::runtime.ir_manager
     ir_manager.dry_run = true
 
-    builder = 
-      if JRuby::runtime.is1_9?
-      org.jruby.ir.IRBuilder19
-    else
-      org.jruby.ir.IRBuilder
-    end
-    builder.new(ir_manager)
+    org.jruby.ir.IRBuilder::createIRBuilder(JRuby::runtime, ir_manager)
   end
   
   def self.build_ir(root_node)
