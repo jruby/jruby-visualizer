@@ -1,4 +1,5 @@
 require 'jrubyfx'
+require 'diffy'
 require_relative 'ir_pretty_printer'
 require_relative 'jruby_visualizer'
 
@@ -24,10 +25,18 @@ class IRVisualizerController
   def initialize(compiler_data)
     @compiler_data = compiler_data
     pretty_ir_string = IRPrettyPrinter.pretty_string(@compiler_data.ir_scope)
-    @ir_view.text = pretty_ir_string
+    @ir_view.text = @new_ir_string = @previous_ir_string = pretty_ir_string
+    
     @compiler_data.ir_scope_property.add_invalidation_listener do |new_scope_property|
-      pretty_ir_string = IRPrettyPrinter.pretty_string(new_scope_property.get)
-      @ir_view.text = pretty_ir_string
+      @previous_ir_string = @new_ir_string
+      @new_ir_string = IRPrettyPrinter.pretty_string(new_scope_property.get)
+      diff_string = Diffy::Diff.new(@previous_ir_string, @new_ir_string).to_s
+      @ir_view.text = 
+      if diff_string.empty?
+        @new_ir_string
+      else
+        diff_string
+      end
     end
   end
   
