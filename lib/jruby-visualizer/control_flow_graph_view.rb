@@ -8,7 +8,7 @@ class BasicBlockBox < Java::javafx.scene.layout.VBox
   def initialize(basic_block, cfg, cfg_list_view)
     super(5)
     @basic_block = basic_block
-    @instrs_box = TextArea.new(@basic_block.to_string_instrs)
+    @instrs_box = TextArea.new(instrs)
     @instrs_box.set_style("-fx-font-family: monospaced")
     @successors = cfg.get_outgoing_destinations(@basic_block).to_a
     unless @successors.empty?
@@ -33,6 +33,10 @@ class BasicBlockBox < Java::javafx.scene.layout.VBox
     else
       get_children << @instrs_box
     end
+  end
+  
+  def instrs
+    @basic_block.to_string_instrs
   end
   
 end
