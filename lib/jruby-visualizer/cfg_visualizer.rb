@@ -65,8 +65,6 @@ class CFGVisualizerController
     unless is_tab_opened
       tab = Tab.new(@selected_scope)
       cfg = get_selected_scope.cfg!
-      #content = "Graph: #{cfg.to_string_graph}\nInstr: #{cfg.to_string_instrs}"
-      # TODO use custom cfg objects and graph drawing instead of text representation
       tab.set_content(ControlFlowGraphView.new(cfg))
       tabs << tab
       # set focus on selected tab
@@ -83,7 +81,6 @@ class CFGVisualizerController
       scope_name = tab.text
       # TODO read and diff on custom cfg objects
       cfg = @ir_registry.scopes[scope_name.to_sym].cfg!
-      #content = "Graph: #{cfg.to_string_graph}\nInstr: #{cfg.to_string_instrs}"
       # TODO listen to events if the ir scope changes
       tab.set_content(ControlFlowGraphView.new(cfg))
     end
