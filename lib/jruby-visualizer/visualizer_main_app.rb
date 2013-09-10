@@ -169,7 +169,7 @@ class JRubyVisualizerController
   end
   
   def self.pixel_height_of_line
-    monospaced = Java::javafx.scene.text.FontBuilder::create.name("monospaced").size(11).build
+    monospaced = Java::javafx.scene.text.FontBuilder::create.name("monospaced").size(13).build
     text = Text.new("  JRubyVisualizer.visualize(ruby_code)")
     text.set_font(monospaced)
     text.get_layout_bounds.get_height
