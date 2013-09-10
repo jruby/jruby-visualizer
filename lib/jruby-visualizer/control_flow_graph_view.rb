@@ -8,7 +8,10 @@ class BasicBlockBox < Java::javafx.scene.layout.VBox
   def initialize(basic_block, cfg, cfg_list_view)
     super(5)
     @basic_block = basic_block
-    @instrs_box = TextArea.new(instrs)
+    instructions = instrs
+    @instrs_box = TextArea.new(instructions)
+    line_no = instructions.lines.count
+    @instrs_box.set_pref_row_count(line_no)
     @instrs_box.set_style("-fx-font-family: monospaced")
     @successors = cfg.get_outgoing_destinations(@basic_block).to_a
     unless @successors.empty?
