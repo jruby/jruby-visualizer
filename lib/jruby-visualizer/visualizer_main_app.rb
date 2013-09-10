@@ -99,6 +99,9 @@ class JRubyVisualizerController
     # bind ruby view to value of ruby_code
     @ruby_view.text_property.bind(@compiler_data.ruby_code_property)
     
+    # enable scrolling to the ruby code on clicks within the AST
+    scroll_ruby_to_selected_ast
+    
     # display the IR compiler passes and set the selection to first pass
     @ir_passes_names = CompilerData.compiler_passes_names
     @ir_passes_box.items = FXCollections.observable_array_list(@ir_passes_names)
@@ -163,6 +166,18 @@ class JRubyVisualizerController
     # refill it
     tree_builder = ASTTreeViewBuilder.new(@ast_view)
     tree_builder.build_view(root_node)
+  end
+  
+  def scroll_ruby_to_selected_ast
+    @ast_view.selection_model.selected_item_property.add_change_listener do |ast_tree_cell|
+      puts ast_tree_cell.node_string
+      start_line = ast_tree_cell.node.position.start_line
+      puts start_line
+      # scroll to start position of current ast tree cell
+      # TODO calculate the height of one line and multiply this with start_line
+      @ruby_view.set_scroll_top(start_line)
+    end
+    @ast_view.selection_model.set_selected_item(@ast_view.root)
   end
   
   def close_app
