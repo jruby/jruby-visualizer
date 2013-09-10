@@ -39,7 +39,12 @@ class BasicBlockBox < Java::javafx.scene.layout.VBox
   end
   
   def instrs
-    @basic_block.to_string_instrs
+    instrs_string = @basic_block.to_string_instrs
+    if instrs_string.end_with?("\n")
+      instrs_string[0...-1]
+    else
+      instrs_string
+    end
   end
   
 end
