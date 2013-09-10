@@ -1,4 +1,22 @@
 require 'java'
+require 'jrubyfx'
+
+class ASTTreeItem < Java::javafx.scene.control.TreeItem
+  include JRubyFX
+  
+  attr_reader :node
+  
+  def initialize(node)
+    @node = node
+    super(node_string)
+  end
+  
+  def node_string
+    node_information = @node.respond_to?(:name) ? ":#{@node.name}" : ""
+    "#{@node.node_name}#{node_information} #{@node.position.start_line}"    
+  end
+  
+end
 
 class ASTTreeViewBuilder
   include JRubyFX
@@ -9,9 +27,7 @@ class ASTTreeViewBuilder
   end
   
   def build_tree_item(node)
-    node_information = node.respond_to?(:name) ? ":#{node.name}" : ""
-    node_string = "#{node.node_name}#{node_information} #{node.position.start_line}"
-    TreeItem.new(node_string)
+    ASTTreeItem.new(node)
   end
 
   def build_view(root)
