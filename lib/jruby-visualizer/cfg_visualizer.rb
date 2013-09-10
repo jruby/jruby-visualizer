@@ -3,6 +3,7 @@ require_relative 'jruby_visualizer'
 require_relative 'ir_scope_registry'
 require_relative 'control_flow_graph_view'
 
+resource_root :images, File.join(File.dirname(__FILE__), "ui", "img"), "ui/img"
 fxml_root File.join(File.dirname(__FILE__), "ui")
 
 class CFGVisualizer < JRubyFX::Application
@@ -10,6 +11,7 @@ class CFGVisualizer < JRubyFX::Application
     compiler_data = JRubyVisualizer.compiler_data
     with(stage, title: "Visualization of Control Flow Graphs (CFG)") do
       fxml(CFGVisualizerController, initialize: [compiler_data])
+      icons.add(Image.new(resource_url(:images, "jruby-icon-32.png").to_s))
       show
     end
   end

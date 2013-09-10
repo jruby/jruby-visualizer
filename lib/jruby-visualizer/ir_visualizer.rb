@@ -3,6 +3,7 @@ require 'diffy'
 require_relative 'ir_pretty_printer'
 require_relative 'jruby_visualizer'
 
+resource_root :images, File.join(File.dirname(__FILE__), "ui", "img"), "ui/img"
 fxml_root File.join(File.dirname(__FILE__), "ui")
 
 class IRVisualizer < JRubyFX::Application
@@ -11,6 +12,7 @@ class IRVisualizer < JRubyFX::Application
     compiler_data = JRubyVisualizer.compiler_data
     with(stage, title: "Intermediate Representation (IR) Visualizer") do
       fxml(IRVisualizerController, initialize: [compiler_data])
+      icons.add(Image.new(resource_url(:images, "jruby-icon-32.png").to_s))
       show
     end
   end
