@@ -168,14 +168,25 @@ class JRubyVisualizerController
     tree_builder.build_view(root_node)
   end
   
+  def self.pixel_height_of_line
+    monospaced = Java::javafx.scene.text.FontBuilder::create.name("monospaced").size(11).build
+    text = Text.new("  JRubyVisualizer.visualize(ruby_code)")
+    text.set_font(monospaced)
+    text.get_layout_bounds.get_height
+  end
+  
   def scroll_ruby_to_selected_ast
     @ast_view.selection_model.selected_item_property.add_change_listener do |ast_tree_cell|
       puts ast_tree_cell.node_string
       start_line = ast_tree_cell.node.position.start_line
       puts start_line
+      line_pixels = self.class.pixel_height_of_line
+      puts line_pixels
+      scroll_to_pixels = line_pixels * start_line
+      puts scroll_to_pixels
       # scroll to start position of current ast tree cell
       # TODO calculate the height of one line and multiply this with start_line
-      @ruby_view.set_scroll_top(start_line)
+      @ruby_view.set_scroll_top(scroll_to_pixels)
     end
     @ast_view.selection_model.set_selected_item(@ast_view.root)
   end
