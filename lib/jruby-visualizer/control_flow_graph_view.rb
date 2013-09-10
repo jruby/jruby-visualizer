@@ -13,6 +13,7 @@ class BasicBlockBox < Java::javafx.scene.layout.VBox
     line_no = instructions.lines.count
     @instrs_box.set_pref_row_count(line_no)
     @instrs_box.set_style("-fx-font-family: monospaced")
+    @instrs_box.set_editable(false)
     @successors = cfg.get_outgoing_destinations(@basic_block).to_a
     unless @successors.empty?
       @successor_buttons = @successors.map do |bb|
