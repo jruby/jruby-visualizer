@@ -5,6 +5,7 @@ require_relative 'ir_visualizer'
 require_relative 'cfg_visualizer'
 require_relative 'jruby_visualizer'
 
+resource_root :images, File.join(File.dirname(__FILE__), "ui", "img"), "ui/img"
 fxml_root File.join(File.dirname(__FILE__), "ui")
 
 class DeletableListCell < Java::javafx.scene.control.ListCell
@@ -76,6 +77,7 @@ class VisualizerMainApp < JRubyFX::Application
     compiler_data = JRubyVisualizer.compiler_data
     with(stage, title: "JRuby Visualizer") do
       fxml(JRubyVisualizerController, initialize: [compiler_data])
+      icons.add(Image.new(resource_url(:images, "jruby-icon-32.png").to_s))
       show
     end
   end
