@@ -52,7 +52,27 @@ module JRubyVisualizer
     # launch App with Ruby code as input
     launch
   end
- 
+  
+  def self.visualize_with_argv(argv)
+    unless argv.length == 1
+      usage_message = 
+      %#No ruby input for the JRuby Visualizer
+  Usage: 
+    ./lib/jruby_visualizer.rb "def foo; 42; end; foo"
+  or
+    ./lib/jruby_visualizer.rb foo.rb#
+      raise usage_message
+    end
+    ruby_input = argv[0]
+    ruby_code = if ruby_input.end_with?('.rb')
+      # TODO enable visualize with 'foo.rb' files
+      File.read(ruby_input)
+    else
+      ruby_input
+    end
+    visualize(ruby_code)
+  end
+  
 end
 
 if __FILE__ == $0
