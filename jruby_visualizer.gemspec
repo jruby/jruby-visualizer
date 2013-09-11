@@ -16,6 +16,9 @@ Gem::Specification.new do |s|
 
   s.executables << 'jruby_visualizer'
 
+  s.add_dependency 'jrubyfx'
+  s.add_dependency 'diffy'
+
   s.rubyforge_project = "jruby_visualizer"
 
   s.files         = files
