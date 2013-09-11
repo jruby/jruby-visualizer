@@ -20,4 +20,4 @@ doc/
 /nbproject/private/
 
 # jrubyfx artifacts
-lib/jruby-visualizer/ui/.jrubyfx_cache
+lib/jruby_visualizer/ui/.jrubyfx_cache

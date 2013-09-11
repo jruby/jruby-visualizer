@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 $:.push File.expand_path("../lib", __FILE__)
-require "jruby-visualizer/version"
+require "jruby_visualizer/version"
 
 files = `git ls-files -- lib/* spec/* sample/*`.split("\n")
 
