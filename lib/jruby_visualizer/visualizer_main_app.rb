@@ -180,7 +180,8 @@ class JRubyVisualizerController
     ruby_lines = ruby_code.lines.to_a
     char_begin = ruby_lines[0...line_number].join.chars.count
     @ruby_view.position_caret(char_begin)
-    @ruby_view.select_next_word
+    char_end = ruby_lines[line_number].chars.count + char_begin
+    @ruby_view.extend_selection(char_end)
   end
   
   def scroll_ruby_to_selected_ast
