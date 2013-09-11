@@ -9,6 +9,7 @@ class ASTTreeItem < Java::javafx.scene.control.TreeItem
   def initialize(node)
     @node = node
     super(node_string)
+    set_expanded(true)
   end
   
   def node_string
