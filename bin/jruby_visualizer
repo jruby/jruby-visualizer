@@ -1,0 +1,5 @@
+#!/usr/bin/env jruby
+
+require 'jruby_visualizer'
+
+JRubyVisualizer.visualize_with_argv
