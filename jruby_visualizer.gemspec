@@ -14,6 +14,8 @@ Gem::Specification.new do |s|
   s.summary     = %q{A Gem for visualizing JRuby compiler artifacts}
   s.description = %q{A Gem for visualizing JRuby compiler artifacts}
 
+  s.executables << 'jruby_visualizer'
+
   s.rubyforge_project = "jruby_visualizer"
 
   s.files         = files
