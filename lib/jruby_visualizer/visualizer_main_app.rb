@@ -187,12 +187,13 @@ class JRubyVisualizerController
   def scroll_ruby_to_selected_ast
     @ast_view.selection_model.selected_item_property.add_change_listener do |ast_tree_cell|
       start_line = ast_tree_cell.node.position.start_line
+      # first mark the line then scroll to it
+      mark_selected_line(start_line)
       line_pixels = self.class.pixel_height_of_line
       # calculate the actual height of the current line in pixels
       scroll_to_pixels = line_pixels * start_line
       # scroll to start position of current ast tree cell
       @ruby_view.set_scroll_top(scroll_to_pixels)
-      mark_selected_line(start_line)
     end
     @ast_view.selection_model.set_selected_item(@ast_view.root)
   end
