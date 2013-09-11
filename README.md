@@ -1,5 +1,5 @@
 # jruby-visualizer
-The ```jruby-visualizer``` gem takes as input Ruby code and visualizes artifacts of JRuby's compiler/interpreter tool chain.
+The ```jruby_visualizer``` gem takes as input Ruby code and visualizes artifacts of JRuby's compiler/interpreter tool chain.
 This includes
  * the Abstract Syntax Tree (AST)
  * the Intermediate Representation (IR)
@@ -11,7 +11,7 @@ You can install this visualizer as gem into your jruby environment:
 
 1. Clone the repository ```$ git clone https://github.com/jruby/jruby-visualizer.git```
 2. Build the gem ```$ rake build```
-3. Install the gem ```$ jruby -S gem install --local pkg/jruby-visualizer-0.1.gem```
+3. Install the gem ```$ jruby -S gem install --local pkg/jruby_visualizer-0.1.gem```
 
 # Usage
 Either
@@ -19,20 +19,20 @@ Either
 1. call into the library
 
 ```
-$ ./lib/jruby-visualizer.rb                             
+$ ./lib/jruby_visualizer.rb                             
 RuntimeError: No ruby input for the JRuby Visualizer
   Usage: 
-    ./lib/jruby-visualizer.rb "def foo; 42; end; foo"
+    ./lib/jruby_visualizer.rb "def foo; 42; end; foo"
   or
-    ./lib/jruby-visualizer.rb foo.rb
-  (root) at ./lib/jruby-visualizer.rb:15
+    ./lib/jruby_visualizer.rb foo.rb
+  (root) at ./lib/jruby_visualizer.rb:15
 ```
 2. use the visualizer as gem in your jruby code
 
 ```ruby
 #!/usr/bin/env jruby
 
-require 'jruby-visualizer'
+require 'jruby_visualizer'
 
 JRubyVisualizer::visualize('def bar; puts "spam HAM"; end; bar')
 ```
