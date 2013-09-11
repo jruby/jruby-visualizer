@@ -53,8 +53,8 @@ module JRubyVisualizer
     launch
   end
   
-  def self.visualize_with_argv(argv)
-    unless argv.length == 1
+  def self.visualize_with_argv
+    unless ARGV.length == 1
       usage_message = 
       %#No ruby input for the JRuby Visualizer
   Usage: 
@@ -63,7 +63,7 @@ module JRubyVisualizer
     ./lib/jruby_visualizer.rb foo.rb#
       raise usage_message
     end
-    ruby_input = argv[0]
+    ruby_input = ARGV[0]
     ruby_code = if ruby_input.end_with?('.rb')
       # TODO enable visualize with 'foo.rb' files
       File.read(ruby_input)
