@@ -175,6 +175,14 @@ class JRubyVisualizerController
     text.get_layout_bounds.get_height
   end
   
+  def mark_selected_line(line_number)
+    ruby_code = @ruby_view.text
+    ruby_lines = ruby_code.lines.to_a
+    char_begin = ruby_lines[0...line_number].join.chars.count
+    @ruby_view.position_caret(char_begin)
+    @ruby_view.select_next_word
+  end
+  
   def scroll_ruby_to_selected_ast
     @ast_view.selection_model.selected_item_property.add_change_listener do |ast_tree_cell|
       start_line = ast_tree_cell.node.position.start_line
@@ -183,6 +191,7 @@ class JRubyVisualizerController
       scroll_to_pixels = line_pixels * start_line
       # scroll to start position of current ast tree cell
       @ruby_view.set_scroll_top(scroll_to_pixels)
+      mark_selected_line(start_line)
     end
     @ast_view.selection_model.set_selected_item(@ast_view.root)
   end
