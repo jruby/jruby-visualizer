@@ -27,7 +27,19 @@ RuntimeError: No ruby input for the JRuby Visualizer
     ./lib/jruby_visualizer.rb foo.rb
   (root) at ./lib/jruby_visualizer.rb:15
 ```
-2. use the visualizer as gem in your jruby code
+This is also possible with the following command, to visualize ```foo.rb```:
+
+```
+$ jruby -Ilib ./bin/jruby_visualizer foo.rb
+```
+
+2. Execute the installed binary
+
+```
+$ jruby_visualizer foo.rb
+```
+
+3. Use the visualizer as gem in your jruby code
 
 ```ruby
 #!/usr/bin/env jruby
