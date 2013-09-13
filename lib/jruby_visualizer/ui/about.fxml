@@ -13,19 +13,19 @@
     <HBox alignment="CENTER" prefHeight="-1.0" prefWidth="-1.0">
       <children>
         <Label text="JRuby:" />
-        <Hyperlink text="www.jruby.org">
+        <Hyperlink fx:id="jruby_hyperlink" text="www.jruby.org">
           <font>
             <Font name="Monospaced Regular" size="13.0" />
           </font>
         </Hyperlink>
       </children>
     </HBox>
-    <ImageView fitHeight="150.0" fitWidth="200.0" onMouseClicked="#jruby_logo_clicked" pickOnBounds="true" preserveRatio="true">
+    <ImageView fx:id="jruby_logo" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
       <image>
         <Image url="@img/jruby-logo.png" />
       </image>
     </ImageView>
-    <Hyperlink text="The JRuby Visualizer">
+    <Hyperlink fx:id="visualizer_hyperlink" text="The JRuby Visualizer">
       <font>
         <Font name="System Bold" size="20.0" />
       </font>
