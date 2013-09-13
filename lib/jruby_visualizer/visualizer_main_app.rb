@@ -4,6 +4,7 @@ require_relative 'compiler_data'
 require_relative 'ir_visualizer'
 require_relative 'cfg_visualizer'
 require_relative 'jruby_visualizer'
+require_relative 'about_page'
 
 resource_root :images, File.join(File.dirname(__FILE__), "ui", "img"), "ui/img"
 fxml_root File.join(File.dirname(__FILE__), "ui")
@@ -60,6 +61,8 @@ class SubAppTask < Java::javafx.concurrent.Task
       @view = IRVisualizer.new
     when :cfg_view
       @view = CFGVisualizer.new
+    when :about_page
+      @view = AboutPage.new
     else
       raise "unknown name for a view: #{view_name}"
     end
@@ -110,6 +113,7 @@ class JRubyVisualizerController
     # background tasks for other views
     @ir_view_task = SubAppTask.new(:ir_view)
     @cfg_view_task = SubAppTask.new(:cfg_view)
+    @about_task = SubAppTask.new(:about_page)
     
     # Use ListCell with Delete Context Menu in the view for compile information
     @compile_information.cell_factory = proc { DeletableListCell.new }
@@ -221,6 +225,17 @@ class JRubyVisualizerController
     elsif state != worker_state::RUNNING
       @cfg_view_task = SubAppTask.new(:cfg_view)
       Platform.run_later(@cfg_view_task)
+    end
+  end
+  
+  def launch_about
+    worker_state = Java::javafx.concurrent.Worker::State
+    state = @about_task.state
+    if state == worker_state::READY
+      Platform.run_later(@about_task)
+    elsif state != worker_state::RUNNING
+      @about_task = SubAppTask.new(:about_page)
+      Platform.run_later(@about_task)
     end
   end
   
