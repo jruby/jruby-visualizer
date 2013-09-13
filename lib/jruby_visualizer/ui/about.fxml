@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="500.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2">
+  <children>
+    <VBox alignment="CENTER" prefHeight="300.0" prefWidth="500.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <children>
+        <HBox alignment="CENTER" prefHeight="-1.0" prefWidth="-1.0">
+          <children>
+            <Label text="JRuby:" />
+            <Hyperlink text="www.jruby.org">
+              <font>
+                <Font name="Monospaced Regular" size="13.0" />
+              </font>
+            </Hyperlink>
+          </children>
+        </HBox>
+        <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+          <image>
+            <Image url="@img/jruby-logo.png" />
+          </image>
+        </ImageView>
+        <Hyperlink text="The JRuby Visualizer">
+          <font>
+            <Font name="System Bold" size="20.0" />
+          </font>
+        </Hyperlink>
+        <TextArea editable="false" prefWidth="200.0" text="visualizes JRuby's Compiler and Interpreter artifacts:&#10;- the Abstract Syntax Tree (AST)&#10;- the Intermediate Representation (IR)&#10;- the execution of compiler passes on IR&#10;- a visualization for the Control Flow Graphs (CFGs) on JRuby Scopes" wrapText="true" />
+      </children>
+    </VBox>
+  </children>
+</AnchorPane>
