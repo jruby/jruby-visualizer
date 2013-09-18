@@ -20,16 +20,16 @@ require 'diffy'
 require_relative 'ir_pretty_printer'
 require_relative 'jruby_visualizer'
 
-resource_root :images, File.join(File.dirname(__FILE__), "ui", "img"), "ui/img"
-fxml_root File.join(File.dirname(__FILE__), "ui")
+resource_root :images, File.join(File.dirname(__FILE__), 'ui', 'img'), 'ui/img'
+fxml_root File.join(File.dirname(__FILE__), 'ui')
 
 class IRVisualizer < JRubyFX::Application
-  
+
   def start(stage)
     compiler_data = JRubyVisualizer.compiler_data
-    with(stage, title: "Intermediate Representation (IR) Visualizer") do
+    with(stage, title: 'Intermediate Representation (IR) Visualizer') do
       fxml(IRVisualizerController, initialize: [compiler_data])
-      icons.add(Image.new(resource_url(:images, "jruby-icon-32.png").to_s))
+      icons.add(Image.new(resource_url(:images, 'jruby-icon-32.png').to_s))
       show
     end
   end
@@ -37,20 +37,20 @@ end
 
 class IRVisualizerController
   include JRubyFX::Controller
-  fxml "ir-view.fxml"
-  
+  fxml 'ir-view.fxml'
+
   attr_reader :compiler_data
-  
+
   def initialize(compiler_data)
     @compiler_data = compiler_data
     pretty_ir_string = IRPrettyPrinter.pretty_string(@compiler_data.ir_scope)
     @ir_view.text = @new_ir_string = @previous_ir_string = pretty_ir_string
-    
+
     @compiler_data.ir_scope_property.add_invalidation_listener do |new_scope_property|
       @previous_ir_string = @new_ir_string
       @new_ir_string = IRPrettyPrinter.pretty_string(new_scope_property.get)
       diff_string = Diffy::Diff.new(@previous_ir_string, @new_ir_string).to_s
-      @ir_view.text = 
+      @ir_view.text =
       if diff_string.empty?
         @new_ir_string
       else
@@ -58,11 +58,12 @@ class IRVisualizerController
       end
     end
   end
-  
+
 end
 
-if __FILE__ == $0
+if __FILE__ == $PROGRAM_NAME
   JRubyVisualizer.compiler_data = CompilerData.new(
     "a = 1 + 4 + 7;\nc = nil;\nj = 1;\ni = 3 + j;\nputs i")
   IRVisualizer.launch
 end
+

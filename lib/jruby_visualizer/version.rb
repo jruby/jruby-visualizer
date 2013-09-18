@@ -16,5 +16,5 @@ limitations under the License.
 =end
 
 module JRubyVisualizer
-  VERSION = "0.1"
+  VERSION = '0.1'
 end
