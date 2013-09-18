@@ -23,8 +23,8 @@ require_relative 'cfg_visualizer'
 require_relative 'jruby_visualizer'
 require_relative 'about_page'
 
-resource_root :images, File.join(File.dirname(__FILE__), "ui", "img"), "ui/img"
-fxml_root File.join(File.dirname(__FILE__), "ui")
+resource_root :images, File.join(File.dirname(__FILE__), 'ui', 'img'), 'ui/img'
+fxml_root File.join(File.dirname(__FILE__), 'ui')
 
 class DeletableListCell < Java::javafx.scene.control.ListCell
   include JRubyFX
@@ -32,7 +32,7 @@ class DeletableListCell < Java::javafx.scene.control.ListCell
   attr_reader :delete_menu
   
   def initialize
-    delete_info_item = MenuItem.new("Delete Information")
+    delete_info_item = MenuItem.new('Delete Information')
     @delete_menu = ContextMenu.new(delete_info_item)
     delete_info_item.on_action do
       items = list_view.items
@@ -42,10 +42,10 @@ class DeletableListCell < Java::javafx.scene.control.ListCell
       end
     end
   end
-  
+
   def updateItem(item, empty)
     super(item, empty)
-    
+
     if empty
       set_text(nil)
       set_graphic(nil)
@@ -54,10 +54,10 @@ class DeletableListCell < Java::javafx.scene.control.ListCell
       set_graphic(nil)
       set_context_menu(@delete_menu)
     end
-    
   end
-  
+
   private
+
   def get_string
     if item
       item.to_s
@@ -65,11 +65,11 @@ class DeletableListCell < Java::javafx.scene.control.ListCell
       ''
     end
   end
-  
+
 end
 
 class SubAppTask < Java::javafx.concurrent.Task
-  
+
   def initialize(view_name)
     super()
     # (select view)
@@ -84,7 +84,7 @@ class SubAppTask < Java::javafx.concurrent.Task
       raise "unknown name for a view: #{view_name}"
     end
   end
-  
+
   def call
     stage = Java::javafx.stage.Stage.new
     @view.start(stage)
@@ -92,12 +92,12 @@ class SubAppTask < Java::javafx.concurrent.Task
 end
 
 class VisualizerMainApp < JRubyFX::Application
-  
+
   def start(stage)
     compiler_data = JRubyVisualizer.compiler_data
-    with(stage, title: "JRuby Visualizer") do
+    with(stage, title: 'JRuby Visualizer') do
       fxml(JRubyVisualizerController, initialize: [compiler_data])
-      icons.add(Image.new(resource_url(:images, "jruby-icon-32.png").to_s))
+      icons.add(Image.new(resource_url(:images, 'jruby-icon-32.png').to_s))
       show
     end
   end
@@ -105,10 +105,10 @@ end
 
 class JRubyVisualizerController
   include JRubyFX::Controller
-  fxml "jruby-visualizer.fxml"
-  
+  fxml 'jruby-visualizer.fxml'
+
   attr_accessor :compiler_data, :information
-  
+
   def initialize(compiler_data)
     @compiler_data = compiler_data
     fill_ast_view(@compiler_data.ast_root)
@@ -118,30 +118,30 @@ class JRubyVisualizerController
     end
     # bind ruby view to value of ruby_code
     @ruby_view.text_property.bind(@compiler_data.ruby_code_property)
-    
+
     # enable scrolling to the ruby code on clicks within the AST
     scroll_ruby_to_selected_ast
-    
+
     # display the IR compiler passes and set the selection to first pass
     @ir_passes_names = CompilerData.compiler_passes_names
     @ir_passes_box.items = FXCollections.observable_array_list(@ir_passes_names)
     @ir_passes_box.value = @selected_ir_pass = @ir_passes_names[0]
-    
+
     # background tasks for other views
     @ir_view_task = SubAppTask.new(:ir_view)
     @cfg_view_task = SubAppTask.new(:cfg_view)
     @about_task = SubAppTask.new(:about_page)
-    
+
     # Use ListCell with Delete Context Menu in the view for compile information
     @compile_information.cell_factory = proc { DeletableListCell.new }
     # information property back ended by the list view for compile information
     @information = @compile_information.items
   end
-  
+
   def select_ir_pass
     @selected_ir_pass = @ir_passes_box.value
   end
-  
+
   def run_previous_passes_for_selection
     if @compiler_data.current_pass.nil?
       return # beginning of ir passes
@@ -159,7 +159,7 @@ class JRubyVisualizerController
       run_previous_passes_for_selection
     end
   end
-  
+
   def step_ir_pass
     if @compiler_data.next_pass
       run_previous_passes_for_selection
@@ -169,18 +169,18 @@ class JRubyVisualizerController
       @information << "Successfully passed #{@selected_ir_pass}"
     end
   end
-  
+
   def clear_information_view
     @information.clear
   end
-  
+
   def reset_passes
     @compiler_data.reset_scheduler
     @selected_ir_pass = @ir_passes_names[0]
     @ir_passes_box.value = @selected_ir_pass
     clear_information_view
   end
-  
+
   def fill_ast_view(root_node)
     # clear view
     @ast_view.root = nil
@@ -188,14 +188,14 @@ class JRubyVisualizerController
     tree_builder = ASTTreeViewBuilder.new(@ast_view)
     tree_builder.build_view(root_node)
   end
-  
+
   def self.pixel_height_of_line
-    monospaced = Java::javafx.scene.text.FontBuilder::create.name("monospaced").size(13).build
-    text = Text.new("  JRubyVisualizer.visualize(ruby_code)")
+    monospaced = Java::javafx.scene.text.FontBuilder::create.name('monospaced').size(13).build
+    text = Text.new('  JRubyVisualizer.visualize(ruby_code)')
     text.set_font(monospaced)
     text.get_layout_bounds.get_height
   end
-  
+
   def mark_selected_line(line_number)
     ruby_code = @ruby_view.text
     ruby_lines = ruby_code.lines.to_a
@@ -204,7 +204,7 @@ class JRubyVisualizerController
     char_end = ruby_lines[line_number].chars.count + char_begin
     @ruby_view.extend_selection(char_end)
   end
-  
+
   def scroll_ruby_to_selected_ast
     @ast_view.selection_model.selected_item_property.add_change_listener do |ast_tree_cell|
       start_line = ast_tree_cell.node.position.start_line
@@ -218,11 +218,11 @@ class JRubyVisualizerController
     end
     @ast_view.selection_model.set_selected_item(@ast_view.root)
   end
-  
+
   def close_app
     Platform.exit
   end
-  
+
   def launch_ir_view
     worker_state = Java::javafx.concurrent.Worker::State
     state = @ir_view_task.state
@@ -233,7 +233,7 @@ class JRubyVisualizerController
       Platform.run_later(@ir_view_task)
     end
   end
-  
+
   def launch_cfg_view
     worker_state = Java::javafx.concurrent.Worker::State
     state = @cfg_view_task.state
@@ -244,7 +244,7 @@ class JRubyVisualizerController
       Platform.run_later(@cfg_view_task)
     end
   end
-  
+
   def launch_about
     worker_state = Java::javafx.concurrent.Worker::State
     state = @about_task.state
@@ -255,10 +255,10 @@ class JRubyVisualizerController
       Platform.run_later(@about_task)
     end
   end
-  
+
 end
 
-if __FILE__ == $0
+if __FILE__ == $PROGRAM_NAME
   JRubyVisualizer.compiler_data = CompilerData.new(
     "class Foo\n  def bar\n    42\n  end\nend\nFoo.new.bar\n")
   VisualizerMainApp.launch
