@@ -17,6 +17,9 @@ limitations under the License.
 
 require 'jrubyfx'
 
+#
+# JavaFX Property that fires always when the set method is called
+#
 class FireChangeObjectProperty < Java::javafx.beans.property.SimpleObjectProperty
   def initialize(*args)
     raise ArgumentError.new "wrong number of arguments (#{args.length} for 3)" if args.length > 3
@@ -29,6 +32,14 @@ class FireChangeObjectProperty < Java::javafx.beans.property.SimpleObjectPropert
   end
 end
 
+#
+# Data container for
+#  * Abstract Syntax Tree (AST),
+#  * Intermediate Code (IR)
+#  * Ruby Code
+# It models and handles the dependencies between those compiler artifacts with
+# JRubyFX properties
+#
 class CompilerData
   include JRubyFX
 

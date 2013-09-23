@@ -15,6 +15,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 =end
 
+#
+# Retrieve a nicely formatted string from JRuby's IRScope
+#
 module IRPrettyPrinter
   
   def self.pretty_ir(scope, indent='')

@@ -18,6 +18,9 @@ limitations under the License.
 require 'java'
 require 'jrubyfx'
 
+#
+# Custom TreeItem, to store the JRuby's AST Node within the item
+#
 class ASTTreeItem < Java::javafx.scene.control.TreeItem
   include JRubyFX
 
@@ -36,6 +39,10 @@ class ASTTreeItem < Java::javafx.scene.control.TreeItem
 
 end
 
+
+#
+# Builder for the custom TreeItem from an usual JRuby AST
+#
 class ASTTreeViewBuilder
   include JRubyFX
 

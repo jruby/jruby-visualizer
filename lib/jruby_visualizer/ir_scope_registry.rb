@@ -17,6 +17,9 @@ limitations under the License.
 
 require_relative 'core_ext/ir_scope'
 
+#
+# Registry for IRScopes, to access them by key without nesting of scopes
+#
 class IRScopeRegistry
 
   attr_reader :scopes

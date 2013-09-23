@@ -23,6 +23,12 @@ require_relative 'jruby_visualizer'
 resource_root :images, File.join(File.dirname(__FILE__), 'ui', 'img'), 'ui/img'
 fxml_root File.join(File.dirname(__FILE__), 'ui')
 
+#
+# Visualizer for JRuby's Intermediate Representation (IR)
+# displaying all IR Scopes with its lexical nesting
+# and
+# diffs on the IR, if it has changed (after executing a compiler pass)
+#
 class IRVisualizer < JRubyFX::Application
 
   def start(stage)
@@ -35,6 +41,10 @@ class IRVisualizer < JRubyFX::Application
   end
 end
 
+#
+# The controller loads the UI file and takes care of the diffs and
+# updating the UI
+#
 class IRVisualizerController
   include JRubyFX::Controller
   fxml 'ir-view.fxml'

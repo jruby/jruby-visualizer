@@ -26,6 +26,9 @@ require_relative 'about_page'
 resource_root :images, File.join(File.dirname(__FILE__), 'ui', 'img'), 'ui/img'
 fxml_root File.join(File.dirname(__FILE__), 'ui')
 
+#
+# A ListCell that enables to delete the cell by a right click (ContextMenu)
+#
 class DeletableListCell < Java::javafx.scene.control.ListCell
   include JRubyFX
   
@@ -68,6 +71,9 @@ class DeletableListCell < Java::javafx.scene.control.ListCell
 
 end
 
+#
+# A concurrent Task for a JRubyFX application from the Visualizer
+#
 class SubAppTask < Java::javafx.concurrent.Task
 
   def initialize(view_name)
@@ -91,6 +97,13 @@ class SubAppTask < Java::javafx.concurrent.Task
   end
 end
 
+#
+# The UI for the whole JRuby visualizer:
+#  * shows AST and Ruby code
+#  * enables traceability between AST nodes and Ruby code lines (clicks on AST)
+#  * launches other UI applications
+#  * can execute compiler passes
+#
 class VisualizerMainApp < JRubyFX::Application
 
   def start(stage)
@@ -103,6 +116,12 @@ class VisualizerMainApp < JRubyFX::Application
   end
 end
 
+#
+# Usual controller functionality:
+#  * loading fxml file
+#  * forward UI actions to the CompilerData container
+#  * launch other Applications as concurrent tasks
+#
 class JRubyVisualizerController
   include JRubyFX::Controller
   fxml 'jruby-visualizer.fxml'

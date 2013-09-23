@@ -17,6 +17,11 @@ limitations under the License.
 
 require 'jrubyfx'
 
+#
+# A custom JRubyFX control for a basic block of a CFG. This view is a composite
+# with a TextArea for the basic blocks and live links to basic blocks that
+# can succeed after this one
+#
 class BasicBlockBox < Java::javafx.scene.layout.VBox
   include JRubyFX
 
@@ -67,6 +72,11 @@ class BasicBlockBox < Java::javafx.scene.layout.VBox
 
 end
 
+#
+# The UI for the CFG as a wrapper for a ListView that is directly built
+# from JRuby's CFG. In order to get a resizable UI element, a BorderPane is
+# used
+#
 class ControlFlowGraphView < Java::javafx.scene.layout.BorderPane
   include JRubyFX
 

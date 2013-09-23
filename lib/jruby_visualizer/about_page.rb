@@ -20,6 +20,9 @@ require 'jrubyfx'
 resource_root :images, File.join(File.dirname(__FILE__), 'ui', 'img'), 'ui/img'
 fxml_root File.join(File.dirname(__FILE__), 'ui')
 
+#
+# JRubyFX Application showing information about the Visualizer
+#
 class AboutPage < JRubyFX::Application
 
   def start(stage)
@@ -46,6 +49,9 @@ class AboutPage < JRubyFX::Application
 
 end
 
+#
+# Controller loads the fxml file for the About Page
+#
 class AboutPageController
   include JRubyFX::Controller
   fxml 'about.fxml'

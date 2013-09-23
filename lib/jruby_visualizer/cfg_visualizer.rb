@@ -23,6 +23,10 @@ require_relative 'control_flow_graph_view'
 resource_root :images, File.join(File.dirname(__FILE__), 'ui', 'img'), 'ui/img'
 fxml_root File.join(File.dirname(__FILE__), 'ui')
 
+#
+# UI to visualize the IR's Control Flow Graph (CFG)
+# Currently as a list view with live links between the basic blocks
+#
 class CFGVisualizer < JRubyFX::Application
   def start(stage)
     compiler_data = JRubyVisualizer.compiler_data
@@ -34,6 +38,10 @@ class CFGVisualizer < JRubyFX::Application
   end
 end
 
+#
+# This controller connects the CompilerData to the CFG View and
+# handles opening/updating tabs for CFGs
+#
 class CFGVisualizerController
   include JRubyFX::Controller
   fxml 'cfg-view.fxml'

@@ -20,6 +20,10 @@ require 'jruby'
 require_relative 'visualizer_compiler_pass_listener'
 require_relative 'visualizer_main_app'
 
+#
+# The Visualizer module enables to launch the visualizer components via
+# an API call or ARGV
+#
 module JRubyVisualizer
   @@main_app = nil
   @@compiler_data = nil
