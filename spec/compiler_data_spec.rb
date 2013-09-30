@@ -1,4 +1,4 @@
-require 'jruby-visualizer/compiler_data'
+require 'jruby_visualizer/compiler_data'
 require 'jruby_visualizer_test_utils'
 
 module CompilerDataTestUtils
