@@ -1,9 +1,9 @@
-require 'jruby-visualizer/ir_scope_registry'
+require 'jruby_visualizer/ir_scope_registry'
 require 'jruby_visualizer_test_utils'
 
 describe IRScopeRegistry do
   include JRubyVisualizerTestUtils
-  
+
   before(:each) do
     @ruby_code = "\nclass Foo\n\ndef bar; 42; end; end;\nFoo.new.bar"
     ast_root = ast_for(@ruby_code)
