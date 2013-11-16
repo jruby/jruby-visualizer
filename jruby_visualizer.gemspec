@@ -8,6 +8,7 @@ Gem::Specification.new do |s|
   s.name        = 'jruby_visualizer'
   s.version     = JRubyVisualizer::VERSION
   s.platform    = Gem::Platform::RUBY
+  s.license     = 'ALv2'
   s.authors     = ['Maximilian Konzack', 'Thomas E. Enebo']
   s.email       = ['maximilian.konzack@gmail.com', 'tom.enebo@gmail.com']
   s.homepage    = 'http://github.com/jruby/jruby-visualizer'
