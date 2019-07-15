@@ -20,8 +20,6 @@ Gem::Specification.new do |s|
   s.add_dependency 'jrubyfx'
   s.add_dependency 'diffy'
 
-  s.rubyforge_project = "jruby_visualizer"
-
   s.files         = files
   s.test_files    = `git ls-files -- spec/*`.split("\n")
   s.require_paths = ["lib"]
